@@ -7,6 +7,16 @@
       "request": "launch",
       "mainClass": "com.emakers.apibiblioteca.ApiBibliotecaApplication",
       "projectName": "api-biblioteca"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ApiBibliotecaApplication<api-biblioteca>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.emakers.api_biblioteca.ApiBibliotecaApplication",
+      "projectName": "api-biblioteca",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }

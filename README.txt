@@ -20,12 +20,12 @@ Repositório criado para processo seletivo da Emakers
 ---
 
     Etapa 2: Modelagem e Banco de Dados
-- [ ] Analisar modelo relacional fornecido
-- [ ] Criar entidade `Pessoa`
-- [ ] Criar entidade `Livro`
-- [ ] Criar entidade de **Empréstimo** (relação M:N)
-- [ ] Configurar `application.properties` com dados do banco
-- [ ] Criar estrutura básica do banco via JPA
+- [x] Analisar modelo relacional fornecido
+- [x] Criar entidade `Pessoa`
+- [x] Criar entidade `Livro`
+- [x] Criar entidade de **Empréstimo** (relação M:N)
+- [x] Configurar `application.properties` com dados do banco
+- [x] Criar estrutura básica do banco via JPA
 
 ---
 
