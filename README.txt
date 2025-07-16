@@ -3,26 +3,19 @@ Repositório criado para processo seletivo da Emakers
 ✅ Checklist de Desenvolvimento – API Biblioteca
 
     Etapa 0: Preparação do Ambiente
-- [ ] Instalar Java JDK 17+
+- [x] Instalar Java JDK 17+
 - [x] Instalar Git e configurar conta GitHub
 - [x] Instalar IDE (VS Code, IntelliJ ou outra)
-- [ ] Configurar PostgreSQL/MySQL ou usar H2
-- [ ] Testar criação de projeto Spring Boot (via Spring Initializr)
+- [x] Configurar PostgreSQL/MySQL ou usar H2
+- [x] Testar criação de projeto Spring Boot (via Spring Initializr)
 
 ---
 
     Etapa 1: Organização e Projeto Inicial
-- [ ] Criar repositório público no GitHub
-- [ ] Clonar repositório localmente
-- [ ] Criar projeto com Spring Initializr com as dependências:
-  - [ ] Spring Web
-  - [ ] Spring Data JPA
-  - [ ] Spring Boot DevTools
-  - [ ] Spring Security
-  - [ ] Swagger/OpenAPI
-  - [ ] H2 ou PostgreSQL
-  - [ ] Validation
-- [ ] Subir projeto base para o GitHub (commit inicial)
+- [x] Criar repositório público no GitHub
+- [x] Clonar repositório localmente
+- [x] Criar projeto com Spring Initializr
+- [x] Subir projeto base para o GitHub (commit inicial)
 
 ---
 
