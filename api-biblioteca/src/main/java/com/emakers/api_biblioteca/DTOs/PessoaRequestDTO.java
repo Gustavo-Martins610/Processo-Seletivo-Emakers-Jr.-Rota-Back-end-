@@ -1,5 +1,6 @@
 package com.emakers.api_biblioteca.DTOs;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -16,6 +17,7 @@ public record PessoaRequestDTO(
     String cep,
 
     @NotBlank(message = "E-mail é necessário")
+    @Email(message = "O E-mail fornecido é inválido")
     String email,
 
     @NotBlank(message = "Senha é necessária")

@@ -30,7 +30,7 @@ public class LivroService {
         return new LivroResponseDTO(livro);
     }
 
-    public LivroResponseDTO criarlivro(LivroRequestDTO livroRequestDTO){
+    public LivroResponseDTO salvarlivro(LivroRequestDTO livroRequestDTO){
         LivroModel livro = new LivroModel(livroRequestDTO);
         livroRepository.save(livro);
         

@@ -33,10 +33,10 @@ Repositório criado para processo seletivo da Emakers
 Para cada entidade (`Pessoa`, `Livro`):
 - [x] Criar classe `Entity`
 - [x] Criar `Repository`
-- [ ] Criar `Service`
-- [ ] Criar `Controller`
-- [ ] Validar com `@Valid` / `@NotNull`
-- [ ] Testar os endpoints com o Postman
+- [x] Criar `Service`
+- [x] Criar `Controller`
+- [x] Validar com `@Valid` / `@NotNull`
+- [x] Testar os endpoints com o Insominia
 
 ---
 
