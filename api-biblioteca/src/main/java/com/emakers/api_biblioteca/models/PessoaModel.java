@@ -1,6 +1,8 @@
 package com.emakers.api_biblioteca.models;
 
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,11 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
-import java.util.UUID;
+
+import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 
 @Entity
 @Table(name = "Pessoa")
-
+@NoArgsConstructor
 
 
 public class PessoaModel implements Serializable{
@@ -20,7 +23,7 @@ public class PessoaModel implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID idPessoa;
+    private Long idPessoa;
     @Column(length = 100, nullable = false) //define o tamanho e a restrição do campo
     private String nome;
     @Column(length = 11, nullable = false)
@@ -36,10 +39,10 @@ public class PessoaModel implements Serializable{
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
-    public UUID getIdPessoa() {
+    public Long getIdPessoa() {
         return idPessoa;
     }
-    public void setIdPessoa(UUID idPessoa) {
+    public void setIdPessoa(Long idPessoa) {
         this.idPessoa = idPessoa;
     }
     public String getNome() {
@@ -72,5 +75,17 @@ public class PessoaModel implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    @Builder
+    public PessoaModel(PessoaRequestDTO pessoaRequestDTO){
+        this.nome = pessoaRequestDTO.nome();
+        this.cpf = pessoaRequestDTO.cpf();
+        this.cep = pessoaRequestDTO.cep();
+        this.email = pessoaRequestDTO.email();
+        this.senha = pessoaRequestDTO.senha();
+    }
+
+
+
 
 }

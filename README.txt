@@ -31,8 +31,8 @@ Repositório criado para processo seletivo da Emakers
 
     Etapa 3: CRUDs Base
 Para cada entidade (`Pessoa`, `Livro`):
-- [ ] Criar classe `Entity`
-- [ ] Criar `Repository`
+- [x] Criar classe `Entity`
+- [x] Criar `Repository`
 - [ ] Criar `Service`
 - [ ] Criar `Controller`
 - [ ] Validar com `@Valid` / `@NotNull`
