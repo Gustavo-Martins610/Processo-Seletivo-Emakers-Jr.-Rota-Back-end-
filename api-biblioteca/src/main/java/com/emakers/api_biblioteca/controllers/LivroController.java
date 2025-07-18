@@ -35,7 +35,7 @@ LivroRepository LivroRepository;
     }
 
     @GetMapping(value = "/{idLivro}") //pq precisa dessas chaves
-    public ResponseEntity<LivroResponseDTO> pegarlivroporid(@Valid @PathVariable Long idlivro){
+    public ResponseEntity<LivroResponseDTO> pegarlivroporid(@PathVariable Long idlivro){
          return ResponseEntity.status(HttpStatus.OK).body(livroService.pegarlivroporid(idlivro));
     }
 
@@ -45,12 +45,14 @@ LivroRepository LivroRepository;
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity <LivroResponseDTO> mudarnomelivro(@Valid @PathVariable Long idlivro, @RequestBody LivroRequestDTO livroRequestDTO){
+    public ResponseEntity <LivroResponseDTO> mudarnomelivro(@Valid @PathVariable Long idlivro,@Valid @RequestBody LivroRequestDTO livroRequestDTO){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.mudarnomelivro(idlivro,livroRequestDTO));
+
+        
     }
 
     @DeleteMapping(value = "/delete/{idLivro}")
-    public ResponseEntity <String> deletarlivro(@Valid Long idlivro){
+    public ResponseEntity <String> deletarlivro(Long idlivro){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.deletarlivro(idlivro));
     }
 

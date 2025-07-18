@@ -1,6 +1,9 @@
 package com.emakers.api_biblioteca.DTOs;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -11,6 +14,9 @@ public record LivroRequestDTO(
     @NotBlank(message = "Autor é necessário")
     String autor, 
     
-    Date data_lancamento
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate data_lancamento,
+
+    Integer quantidade
 ) {
 }

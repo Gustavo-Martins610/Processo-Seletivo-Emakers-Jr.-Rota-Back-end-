@@ -1,0 +1,2 @@
+Bugs encontrados até o momento
+-Requisição do create de livro/pessoa não está fuincionando devido aoos valores estarem sendo inseridos como nulos e da conflito com os campos que sao NotNull

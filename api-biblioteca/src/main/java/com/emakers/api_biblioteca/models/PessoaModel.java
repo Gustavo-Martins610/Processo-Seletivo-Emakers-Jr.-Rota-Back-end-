@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.io.Serializable;
+
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 
@@ -18,8 +18,8 @@ import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 @NoArgsConstructor
 
 
-public class PessoaModel implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class PessoaModel{
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +36,7 @@ public class PessoaModel implements Serializable{
     private String senha;
 
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
+    
     public Long getIdPessoa() {
         return idPessoa;
     }

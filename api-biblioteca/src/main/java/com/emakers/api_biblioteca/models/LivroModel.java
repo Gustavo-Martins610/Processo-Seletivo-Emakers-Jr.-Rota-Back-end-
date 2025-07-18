@@ -1,7 +1,8 @@
 package com.emakers.api_biblioteca.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
@@ -33,9 +34,17 @@ public class LivroModel implements Serializable{
     @Column(length = 100, nullable = false)
     private String autor;
     @Temporal(TemporalType.DATE) // indica que o campo será armazenado como DATE (sem as horas como é padrão do Java.util)
-    private Date data_lancamento;
+    private LocalDate data_lancamento;
+    @Column(nullable = false)
+    private Integer quantidade;
 
 
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
@@ -57,10 +66,10 @@ public class LivroModel implements Serializable{
     public void setAutor(String autor) {
         this.autor = autor;
     }
-    public Date getData_lancamento() {
+    public LocalDate getData_lancamento() {
         return data_lancamento;
     }
-    public void setData_lancamento(Date data_lancamento) {
+    public void setData_lancamento(LocalDate data_lancamento) {
         this.data_lancamento = data_lancamento;
     }
 

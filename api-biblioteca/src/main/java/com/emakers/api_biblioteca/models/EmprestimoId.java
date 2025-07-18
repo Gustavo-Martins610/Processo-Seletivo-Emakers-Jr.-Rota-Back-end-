@@ -1,29 +1,28 @@
 package com.emakers.api_biblioteca.models;
 
 import jakarta.persistence.Embeddable;
-import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
+
 
 @Embeddable
-public class EmprestimoId implements Serializable {
+public class EmprestimoId{
 
-    private UUID idPessoa;
-    private UUID idLivro;
+    private Long idPessoa;
+    private Long idLivro;
 
-    public UUID getIdPessoa() {
+    public Long getIdPessoa() {
         return idPessoa;
     }
 
-    public void setIdPessoa(UUID idPessoa) {
+    public void setIdPessoa(Long idPessoa) {
         this.idPessoa = idPessoa;
     }
 
-    public UUID getIdLivro() {
+    public Long getIdLivro() {
         return idLivro;
     }
 
-    public void setIdLivro(UUID idLivro) {
+    public void setIdLivro(Long idLivro) {
         this.idLivro = idLivro;
     }
 

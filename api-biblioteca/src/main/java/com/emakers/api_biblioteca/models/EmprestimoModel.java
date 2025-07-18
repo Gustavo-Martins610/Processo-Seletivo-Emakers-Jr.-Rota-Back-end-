@@ -1,5 +1,7 @@
 package com.emakers.api_biblioteca.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +20,29 @@ public class EmprestimoModel {
     @MapsId("idLivro")
     @JoinColumn(name = "idLivro")
     private LivroModel livro;
+
+    @Column(nullable = false)
+    private LocalDate dataEmprestimo;
+
+    @Column(nullable = false)
+    private LocalDate dataDevolucao;
+
+    
+    public LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
 
     // Getters e setters
     public EmprestimoId getId() {

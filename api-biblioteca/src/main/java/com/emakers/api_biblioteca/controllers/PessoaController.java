@@ -28,30 +28,31 @@ public class PessoaController {
     @Autowired
     PessoaRepository PessoaRepository;
     @Autowired
-    private PessoaService pessoaService ;
+    private PessoaService PessoaService ;
 
     @GetMapping(value = "/all") //o que é um endpoint e o que são esses mapping
     public ResponseEntity<List<PessoaResponseDTO>> pegartodaspessoas(){
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegartodaspessoas());
+        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.pegartodaspessoas());
     }
 
     @GetMapping(value = "/{idPessoa}") //pq precisa dessas chaves
-    public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(@Valid @PathVariable Long idpessoa){
-         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegarpessoaporid(idpessoa));
+    public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(@PathVariable Long idpessoa){
+         return ResponseEntity.status(HttpStatus.OK).body(PessoaService.pegarpessoaporid(idpessoa));
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<PessoaResponseDTO> salvarpessoa(@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.salvarpessoa(pessoaRequestDTO));
+    public ResponseEntity<PessoaResponseDTO> salvarpessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO){
+        PessoaResponseDTO pessoaResponse = PessoaService.salvarpessoa(pessoaRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaResponse);
     }
 
     @PostMapping(value = "/update")
     public ResponseEntity <PessoaResponseDTO> mudarnomepesssoa(@Valid @PathVariable Long idpessoa, @RequestBody PessoaRequestDTO pessoaRequestDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.mudarnomepessoa(idpessoa,pessoaRequestDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.mudarnomepessoa(idpessoa,pessoaRequestDTO));
     }
 
     @DeleteMapping(value = "/delete/{idPessoa}")
-    public ResponseEntity <String> deletarpessoa(@Valid Long idpessoa){
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.deletarpessoa(idpessoa));
+    public ResponseEntity <String> deletarpessoa(Long idpessoa){
+        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.deletarpessoa(idpessoa));
     }
 }
