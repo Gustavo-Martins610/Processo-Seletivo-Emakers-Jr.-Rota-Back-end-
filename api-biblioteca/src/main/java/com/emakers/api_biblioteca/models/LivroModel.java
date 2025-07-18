@@ -17,9 +17,13 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Livro")
 @NoArgsConstructor
 
@@ -38,40 +42,6 @@ public class LivroModel implements Serializable{
     @Column(nullable = false)
     private Integer quantidade;
 
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-    public Long getIdLivro() {
-        return idLivro;
-    }
-    public void setIdLivro(Long idLivro) {
-        this.idLivro = idLivro;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public String getAutor() {
-        return autor;
-    }
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-    public LocalDate getData_lancamento() {
-        return data_lancamento;
-    }
-    public void setData_lancamento(LocalDate data_lancamento) {
-        this.data_lancamento = data_lancamento;
-    }
 
     @Builder
     public LivroModel(LivroRequestDTO livroRequestDTO){

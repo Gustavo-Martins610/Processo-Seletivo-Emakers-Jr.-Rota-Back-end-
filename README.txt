@@ -3,47 +3,47 @@ Repositório criado para processo seletivo da Emakers
 ✅ Checklist de Desenvolvimento – API Biblioteca
 
     Etapa 0: Preparação do Ambiente
-- [x] Instalar Java JDK 17+
-- [x] Instalar Git e configurar conta GitHub
-- [x] Instalar IDE (VS Code, IntelliJ ou outra)
-- [x] Configurar PostgreSQL/MySQL ou usar H2
-- [x] Testar criação de projeto Spring Boot (via Spring Initializr)
+- [] Instalar Java JDK 17+
+- [] Instalar Git e configurar conta GitHub
+- [] Instalar IDE (VS Code, IntelliJ ou outra)
+- [] Configurar PostgreSQL/MySQL ou usar H2
+- [] Testar criação de projeto Spring Boot (via Spring Initializr)
 
 ---
 
     Etapa 1: Organização e Projeto Inicial
-- [x] Criar repositório público no GitHub
-- [x] Clonar repositório localmente
-- [x] Criar projeto com Spring Initializr
-- [x] Subir projeto base para o GitHub (commit inicial)
+- [] Criar repositório público no GitHub
+- [] Clonar repositório localmente
+- [] Criar projeto com Spring Initializr
+- [] Subir projeto base para o GitHub (commit inicial)
 
 ---
 
     Etapa 2: Modelagem e Banco de Dados
-- [x] Analisar modelo relacional fornecido
-- [x] Criar entidade `Pessoa`
-- [x] Criar entidade `Livro`
-- [x] Criar entidade de **Empréstimo** (relação M:N)
-- [x] Configurar `application.properties` com dados do banco
-- [x] Criar estrutura básica do banco via JPA
+- [] Analisar modelo relacional fornecido
+- [] Criar entidade `Pessoa`
+- [] Criar entidade `Livro`
+- [] Criar entidade de **Empréstimo** (relação M:N)
+- [] Configurar `application.properties` com dados do banco
+- [] Criar estrutura básica do banco via JPA
 
 ---
 
     Etapa 3: CRUDs Base
 Para cada entidade (`Pessoa`, `Livro`):
-- [x] Criar classe `Entity`
-- [x] Criar `Repository`
-- [x] Criar `Service`
-- [x] Criar `Controller`
-- [x] Validar com `@Valid` / `@NotNull`
-- [x] Testar os endpoints com o Insominia
+- [] Criar classe `Entity`
+- [] Criar `Repository`
+- [] Criar `Service`
+- [] Criar `Controller`
+- [] Validar com `@Valid` / `@NotNull`
+- [] Testar os endpoints com o Insominia
 
 ---
 
     Etapa 4: Funcionalidades Especiais
-- [ ] Criar endpoint para **empréstimo de livro**
-- [ ] Criar endpoint para **devolução de livro**
-- [ ] Atualizar quantidade de exemplares do livro ao emprestar/devolver
+- [] Criar endpoint para **empréstimo de livro**
+- [] Criar endpoint para **devolução de livro**
+- [] Atualizar quantidade de exemplares do livro ao emprestar/devolver
 - [ ] Integrar com API externa ViaCEP para preencher endereço da `Pessoa`
 
 ---
@@ -52,7 +52,7 @@ Para cada entidade (`Pessoa`, `Livro`):
 - [ ] Implementar autenticação com **Spring Security**
 - [ ] Proteger rotas com autenticação
 - [ ] Documentar a API com **Swagger**
-- [ ] Criar tratamento global de exceções (`@ControllerAdvice`)
+- [x] Criar tratamento global de exceções (`@ControllerAdvice`)
 
 ---
 
