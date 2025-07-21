@@ -46,10 +46,10 @@ public class LivroService {
     }
 
     public String deletarlivro(Long idlivro){
-        LivroModel livro = (livroRepository.findById(idlivro).orElseThrow(()-> new RuntimeErrorException(null, "ID não encontrado")));
+        LivroModel livro = (livroRepository.findById(idlivro).orElseThrow(()-> new IllegalArgumentException("ID não encontrado")));
         livroRepository.delete(livro);
 
-        return "Livro de ID" + idlivro + "deletado";
+        return "Livro de ID " + idlivro + " deletado";
     }
 
 

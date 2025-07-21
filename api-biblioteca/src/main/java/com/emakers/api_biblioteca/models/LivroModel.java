@@ -1,6 +1,6 @@
 package com.emakers.api_biblioteca.models;
 
-import java.io.Serializable;
+
 import java.time.LocalDate;
 
 
@@ -27,8 +27,8 @@ import lombok.Setter;
 @Table(name = "Livro")
 @NoArgsConstructor
 
-public class LivroModel implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class LivroModel{
+   
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +48,7 @@ public class LivroModel implements Serializable{
         this.nome = livroRequestDTO.nome();
         this.autor = livroRequestDTO.autor();
         this.data_lancamento = livroRequestDTO.data_lancamento();
+        this.quantidade = livroRequestDTO.quantidade();
     }
 
 

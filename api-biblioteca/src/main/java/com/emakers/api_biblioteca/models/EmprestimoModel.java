@@ -3,8 +3,12 @@ package com.emakers.api_biblioteca.models;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Emprestimo")
 public class EmprestimoModel {
 
@@ -13,60 +17,19 @@ public class EmprestimoModel {
 
     @ManyToOne
     @MapsId("idPessoa")
-    @JoinColumn(name = "idPessoa")
+    @JoinColumn(name = "id_pessoa")
     private PessoaModel pessoa;
 
     @ManyToOne
     @MapsId("idLivro")
-    @JoinColumn(name = "idLivro")
+    @JoinColumn(name = "id_livro")
     private LivroModel livro;
 
-    @Column(nullable = false)
+    @Column(name = "data_emprestimo")
     private LocalDate dataEmprestimo;
 
-    @Column(nullable = false)
+    @Column(name = "data_devolucao")
     private LocalDate dataDevolucao;
 
-    
-    public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
-    }
-
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-
-    // Getters e setters
-    public EmprestimoId getId() {
-        return id;
-    }
-
-    public void setId(EmprestimoId id) {
-        this.id = id;
-    }
-
-    public PessoaModel getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(PessoaModel pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    public LivroModel getLivro() {
-        return livro;
-    }
-
-    public void setLivro(LivroModel livro) {
-        this.livro = livro;
-    }
 }
 

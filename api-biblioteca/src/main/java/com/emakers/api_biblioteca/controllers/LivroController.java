@@ -17,7 +17,9 @@ import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
 import com.emakers.api_biblioteca.repositories.LivroRepository;
 import com.emakers.api_biblioteca.services.LivroService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -35,34 +37,24 @@ LivroRepository LivroRepository;
     }
 
     @GetMapping(value = "/{idLivro}") //pq precisa dessas chaves
-    public ResponseEntity<LivroResponseDTO> pegarlivroporid(@PathVariable Long idlivro){
+    public ResponseEntity<LivroResponseDTO> pegarlivroporid(@PathVariable("idLivro") Long idlivro){
          return ResponseEntity.status(HttpStatus.OK).body(livroService.pegarlivroporid(idlivro));
     }
 
     @PostMapping(value = "/create")
     public ResponseEntity<LivroResponseDTO> salvarlivro(@Valid @RequestBody LivroRequestDTO livroRequestDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(livroService.salvarlivro(livroRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.salvarlivro(livroRequestDTO));
     }
 
     @PostMapping(value = "/update")
     public ResponseEntity <LivroResponseDTO> mudarnomelivro(@Valid @PathVariable Long idlivro,@Valid @RequestBody LivroRequestDTO livroRequestDTO){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.mudarnomelivro(idlivro,livroRequestDTO));
-
-        
     }
 
     @DeleteMapping(value = "/delete/{idLivro}")
-    public ResponseEntity <String> deletarlivro(Long idlivro){
+    public ResponseEntity <String> deletarlivro(@PathVariable("idLivro") Long idlivro){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.deletarlivro(idlivro));
     }
-
-
-
-
-
-
-
-
 
 }
 

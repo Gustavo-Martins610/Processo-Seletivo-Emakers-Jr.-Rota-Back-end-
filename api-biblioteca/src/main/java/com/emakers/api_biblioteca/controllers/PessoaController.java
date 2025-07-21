@@ -17,7 +17,7 @@ import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.PessoaService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,33 +26,33 @@ public class PessoaController {
 
 
     @Autowired
-    PessoaRepository PessoaRepository;
+    PessoaRepository pessoaRepository;
     @Autowired
-    private PessoaService PessoaService ;
+    private PessoaService pessoaService ;
 
     @GetMapping(value = "/all") //o que é um endpoint e o que são esses mapping
     public ResponseEntity<List<PessoaResponseDTO>> pegartodaspessoas(){
-        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.pegartodaspessoas());
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegartodaspessoas());
     }
 
     @GetMapping(value = "/{idPessoa}") //pq precisa dessas chaves
-    public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(@PathVariable Long idpessoa){
-         return ResponseEntity.status(HttpStatus.OK).body(PessoaService.pegarpessoaporid(idpessoa));
+    public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(@PathVariable("idPessoa") Long idpessoa){
+         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegarpessoaporid(idpessoa));
     }
 
     @PostMapping(value = "/create")
     public ResponseEntity<PessoaResponseDTO> salvarpessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO){
-        PessoaResponseDTO pessoaResponse = PessoaService.salvarpessoa(pessoaRequestDTO);
+        PessoaResponseDTO pessoaResponse = pessoaService.salvarpessoa(pessoaRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaResponse);
     }
 
-    @PostMapping(value = "/update")
-    public ResponseEntity <PessoaResponseDTO> mudarnomepesssoa(@Valid @PathVariable Long idpessoa, @RequestBody PessoaRequestDTO pessoaRequestDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.mudarnomepessoa(idpessoa,pessoaRequestDTO));
+    @PostMapping(value = "/update/{idPessoa}")
+    public ResponseEntity <PessoaResponseDTO> mudarnomepessoa(@Valid @PathVariable("idPessoa") Long idpessoa, @RequestBody PessoaRequestDTO pessoaRequestDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.mudarnomepessoa(idpessoa,pessoaRequestDTO));
     }
 
     @DeleteMapping(value = "/delete/{idPessoa}")
-    public ResponseEntity <String> deletarpessoa(Long idpessoa){
-        return ResponseEntity.status(HttpStatus.OK).body(PessoaService.deletarpessoa(idpessoa));
+    public ResponseEntity <String> deletarpessoa(@PathVariable("idPessoa") Long idpessoa){
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.deletarpessoa(idpessoa));
     }
 }

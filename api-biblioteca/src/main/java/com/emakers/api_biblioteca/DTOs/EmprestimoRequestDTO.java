@@ -10,6 +10,4 @@ public record EmprestimoRequestDTO(
     LocalDate dataEmprestimo,
     LocalDate dataDevolucao
 ) {
-    
-
 }

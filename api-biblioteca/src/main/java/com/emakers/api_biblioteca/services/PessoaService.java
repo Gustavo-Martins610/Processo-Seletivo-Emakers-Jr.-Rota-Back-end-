@@ -26,7 +26,7 @@ public class PessoaService {
     }
 
     public PessoaResponseDTO pegarpessoaporid(Long idpessoa){
-        PessoaModel pessoa = (pessoaRepository.findById(idpessoa).orElseThrow(()-> new RuntimeErrorException(null, "ID não encontrado")));
+        PessoaModel pessoa = (pessoaRepository.findById(idpessoa).orElseThrow(()-> new IllegalArgumentException("ID não encontrado")));
         return new PessoaResponseDTO(pessoa);
     }
 
@@ -38,7 +38,7 @@ public class PessoaService {
     }
 
     public PessoaResponseDTO mudarnomepessoa(Long idpessoa, PessoaRequestDTO pessoaRequestDTO){
-        PessoaModel pessoa = (pessoaRepository.findById(idpessoa).orElseThrow(()-> new RuntimeErrorException(null, "ID não encontrado")));
+        PessoaModel pessoa = (pessoaRepository.findById(idpessoa).orElseThrow(()-> new IllegalArgumentException("ID não encontrado")));
         pessoa.setNome(pessoaRequestDTO.nome());
         pessoaRepository.save(pessoa);
 

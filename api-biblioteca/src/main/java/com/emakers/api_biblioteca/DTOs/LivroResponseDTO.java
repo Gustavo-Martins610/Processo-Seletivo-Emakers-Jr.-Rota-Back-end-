@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import com.emakers.api_biblioteca.models.LivroModel;
 
 
+
+import lombok.Builder;
+
+
 public record LivroResponseDTO(
 
     Long idLivro,
@@ -15,6 +19,7 @@ public record LivroResponseDTO(
     Integer quantidade
 
 ) {
+    @Builder
     public LivroResponseDTO(LivroModel livro){
         this(
         livro.getIdLivro(),

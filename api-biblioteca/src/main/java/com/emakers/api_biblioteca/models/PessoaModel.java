@@ -14,6 +14,7 @@ import lombok.Setter;
 
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Getter
@@ -30,7 +31,7 @@ public class PessoaModel{
     private Long idPessoa;
     @Column(length = 100, nullable = false) //define o tamanho e a restrição do campo
     private String nome;
-    @Column(length = 11, nullable = false)
+    @Column(length = 20, nullable = false)
     private String cpf;
     @Column(length = 9)
     private String cep;
@@ -38,6 +39,18 @@ public class PessoaModel{
     private String email;
     @Column(length = 100)
     private String senha;
+    @Column(length = 8)
+    private String numero;
+    @Column(length = 100)
+    private String logradouro;
+    @Column(length = 50)
+    private String bairro;
+    @Column(length = 50)
+    @JsonProperty("localidade")
+    private String cidade;
+    @Column(length = 2)
+    @JsonProperty("uf")
+    private String estado;
 
 
     @Builder
@@ -45,7 +58,12 @@ public class PessoaModel{
         this.nome = pessoaRequestDTO.nome();
         this.cpf = pessoaRequestDTO.cpf();
         this.cep = pessoaRequestDTO.cep();
+        this.numero = pessoaRequestDTO.numero();
         this.email = pessoaRequestDTO.email();
         this.senha = pessoaRequestDTO.senha();
+        this.logradouro = pessoaRequestDTO.logradouro();
+        this.bairro = pessoaRequestDTO.bairro();
+        this.cidade = pessoaRequestDTO.cidade();
+        this.estado = pessoaRequestDTO.estado();
     }
 }

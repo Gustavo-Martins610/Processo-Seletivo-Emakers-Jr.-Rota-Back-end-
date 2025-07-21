@@ -1,5 +1,6 @@
 package com.emakers.api_biblioteca.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.util.Objects;
 
@@ -7,7 +8,9 @@ import java.util.Objects;
 @Embeddable
 public class EmprestimoId{
 
+    @Column(name = "id_livro")
     private Long idPessoa;
+    @Column(name = "id_pessoa")
     private Long idLivro;
 
     public Long getIdPessoa() {
