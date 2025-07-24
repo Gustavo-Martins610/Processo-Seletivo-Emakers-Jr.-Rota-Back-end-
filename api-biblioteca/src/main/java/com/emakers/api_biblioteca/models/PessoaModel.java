@@ -5,15 +5,23 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
+import com.emakers.api_biblioteca.Users.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -23,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NoArgsConstructor
 
 
-public class PessoaModel{
+public class PessoaModel implements UserDetails{
     
 
     @Id
@@ -51,6 +59,9 @@ public class PessoaModel{
     @Column(length = 2)
     @JsonProperty("uf")
     private String estado;
+    @Column(length = 5)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
 
     @Builder
@@ -60,10 +71,51 @@ public class PessoaModel{
         this.cep = pessoaRequestDTO.cep();
         this.numero = pessoaRequestDTO.numero();
         this.email = pessoaRequestDTO.email();
+        this.role = pessoaRequestDTO.role();
         this.senha = pessoaRequestDTO.senha();
         this.logradouro = pessoaRequestDTO.logradouro();
         this.bairro = pessoaRequestDTO.bairro();
         this.cidade = pessoaRequestDTO.cidade();
         this.estado = pessoaRequestDTO.estado();
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

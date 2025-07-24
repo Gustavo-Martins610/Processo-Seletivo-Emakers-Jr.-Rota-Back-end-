@@ -16,6 +16,7 @@ public record PessoaResponseDTO(
     String bairro,
     String cidade,
     String estado
+    
 
 ) {
     @Builder

@@ -1,14 +1,16 @@
 package com.emakers.api_biblioteca.repositories;
 
 
-import com.emakers.api_biblioteca.Users.User;
+
+import com.emakers.api_biblioteca.models.PessoaModel;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<PessoaModel,Long> {
 
-    UserDetails findByLogin(String login);
+    UserDetails findByEmail(String email);
 
 }

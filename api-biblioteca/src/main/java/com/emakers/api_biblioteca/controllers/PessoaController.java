@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
+import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
+import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.PessoaService;
+import com.emakers.api_biblioteca.services.ViaCepService;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -23,27 +26,41 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
-
+    @Autowired
+    ViaCepService viaCepService;
 
     @Autowired
     PessoaRepository pessoaRepository;
     @Autowired
-    private PessoaService pessoaService ;
+    private PessoaService pessoaService;
 
-    @GetMapping(value = "/all") //o que é um endpoint e o que são esses mapping
+    @GetMapping(value = "/all")
     public ResponseEntity<List<PessoaResponseDTO>> pegartodaspessoas(){
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegartodaspessoas());
     }
 
-    @GetMapping(value = "/{idPessoa}") //pq precisa dessas chaves
+    @GetMapping(value = "/{idPessoa}")
     public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(@PathVariable("idPessoa") Long idpessoa){
          return ResponseEntity.status(HttpStatus.OK).body(pessoaService.pegarpessoaporid(idpessoa));
     }
 
     @PostMapping(value = "/create")
     public ResponseEntity<PessoaResponseDTO> salvarpessoa(@RequestBody PessoaRequestDTO pessoaRequestDTO){
-        PessoaResponseDTO pessoaResponse = pessoaService.salvarpessoa(pessoaRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaResponse);
+        ViaCepResponseDTO endereco = viaCepService.consultarCep(pessoaRequestDTO.cep());
+        PessoaModel pessoa = new PessoaModel();
+        pessoa.setNome(pessoaRequestDTO.nome());
+        pessoa.setCpf(pessoaRequestDTO.cpf());
+        pessoa.setCep(pessoaRequestDTO.cep());
+        pessoa.setEmail(pessoaRequestDTO.email());
+        pessoa.setSenha(pessoaRequestDTO.senha());
+        pessoa.setNumero(pessoaRequestDTO.numero());
+        pessoa.setLogradouro(endereco.getLogradouro());
+        pessoa.setBairro(endereco.getBairro());
+        pessoa.setCidade(endereco.getLocalidade());
+        pessoa.setEstado(endereco.getUf());
+
+        pessoaRepository.save(pessoa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PessoaResponseDTO(pessoa));
     }
 
     @PostMapping(value = "/update/{idPessoa}")

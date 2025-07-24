@@ -31,12 +31,12 @@ LivroRepository LivroRepository;
     @Autowired
     private LivroService livroService;
 
-    @GetMapping(value = "/all") //o que é um endpoint e o que são esses mapping
+    @GetMapping(value = "/all")
     public ResponseEntity<List<LivroResponseDTO>> pegartodoslivros(){
         return ResponseEntity.status(HttpStatus.OK).body(livroService.pegartodoslivros());
     }
 
-    @GetMapping(value = "/{idLivro}") //pq precisa dessas chaves
+    @GetMapping(value = "/{idLivro}")
     public ResponseEntity<LivroResponseDTO> pegarlivroporid(@PathVariable("idLivro") Long idlivro){
          return ResponseEntity.status(HttpStatus.OK).body(livroService.pegarlivroporid(idlivro));
     }

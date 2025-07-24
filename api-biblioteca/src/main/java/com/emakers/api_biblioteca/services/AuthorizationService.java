@@ -6,17 +6,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.emakers.api_biblioteca.repositories.UserRepository;
+import com.emakers.api_biblioteca.repositories.PessoaRepository;
 
 @Service
 public class AuthorizationService implements UserDetailsService{
 
     @Autowired
-    UserRepository userRepository;
+    PessoaRepository pessoaRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByLogin(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return pessoaRepository.findByEmail(email);
     }
 
 }

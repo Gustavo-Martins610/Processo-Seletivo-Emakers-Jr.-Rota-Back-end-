@@ -20,7 +20,7 @@ import com.emakers.api_biblioteca.repositories.PessoaRepository;
 
 @RestController
 @RequestMapping("/pessoa-com-cep")
-public class ViaCepController {
+public class ViaCepControllerUseless {
     @Autowired
     private ViaCepService viaCepService;
     
@@ -28,16 +28,16 @@ public class ViaCepController {
     private PessoaRepository pessoaRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<PessoaResponseDTO>salvarPessoa(@Valid @RequestBody PessoaRequestDTO dto) {
-    ViaCepResponseDTO endereco = viaCepService.consultarCep(dto.cep());
+    public ResponseEntity<PessoaResponseDTO>salvarPessoa(@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO) {
+    ViaCepResponseDTO endereco = viaCepService.consultarCep(pessoaRequestDTO.cep());
 
     PessoaModel pessoa = new PessoaModel();
-    pessoa.setNome(dto.nome());
-    pessoa.setCpf(dto.cpf());
-    pessoa.setCep(dto.cep());
-    pessoa.setEmail(dto.email());
-    pessoa.setSenha(dto.senha());
-    pessoa.setNumero(dto.numero());
+    pessoa.setNome(pessoaRequestDTO.nome());
+    pessoa.setCpf(pessoaRequestDTO.cpf());
+    pessoa.setCep(pessoaRequestDTO.cep());
+    pessoa.setEmail(pessoaRequestDTO.email());
+    pessoa.setSenha(pessoaRequestDTO.senha());
+    pessoa.setNumero(pessoaRequestDTO.numero());
     pessoa.setLogradouro(endereco.getLogradouro());
     pessoa.setBairro(endereco.getBairro());
     pessoa.setCidade(endereco.getLocalidade());

@@ -14,7 +14,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.emakers.api_biblioteca.Users.User;
+import com.emakers.api_biblioteca.models.PessoaModel;
 
 @Service
 public class TokenService {
@@ -25,12 +25,12 @@ public class TokenService {
     private String secret;
 
     
-    public String generateToken(User user){
+    public String generateToken(PessoaModel pessoaModel){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                 .withIssuer("auth-api")
-                .withSubject(user.getLogin())
+                .withSubject(pessoaModel.getEmail())
                 .withExpiresAt(genExpirationDate())
                 .sign(algorithm);
                 return token;

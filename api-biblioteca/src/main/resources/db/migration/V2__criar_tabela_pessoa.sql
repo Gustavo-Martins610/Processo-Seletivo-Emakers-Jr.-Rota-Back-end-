@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS Pessoa(
     cep VARCHAR(9),
     email VARCHAR(100),
     senha VARCHAR(100),
+    role VARCHAR(10) NOT NULL,
     numero VARCHAR(8),
     logradouro VARCHAR(100),
     bairro VARCHAR(50),
