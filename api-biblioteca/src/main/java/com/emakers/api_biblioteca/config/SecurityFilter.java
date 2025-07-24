@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.emakers.api_biblioteca.repositories.UserRepository;
+import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.TokenService;
 
 import jakarta.servlet.FilterChain;
@@ -25,7 +25,7 @@ public class SecurityFilter extends OncePerRequestFilter{
     @Autowired
     TokenService tokenService;
     @Autowired
-    UserRepository userRepository;
+    PessoaRepository pessoaRepository;
 
 
     @Override
@@ -36,10 +36,10 @@ public class SecurityFilter extends OncePerRequestFilter{
             }
         var token = this.recoverToken(request);
         if(token != null){
-            var login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(login);
+            var email = tokenService.validateToken(token);
+            UserDetails pessoa = pessoaRepository.findByEmail(email);
 
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(pessoa, null, pessoa.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

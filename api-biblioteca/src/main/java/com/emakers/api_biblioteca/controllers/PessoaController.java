@@ -54,6 +54,7 @@ public class PessoaController {
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setSenha(pessoaRequestDTO.senha());
         pessoa.setNumero(pessoaRequestDTO.numero());
+        pessoa.setComplemento(pessoaRequestDTO.complemento());
         pessoa.setLogradouro(endereco.getLogradouro());
         pessoa.setBairro(endereco.getBairro());
         pessoa.setCidade(endereco.getLocalidade());

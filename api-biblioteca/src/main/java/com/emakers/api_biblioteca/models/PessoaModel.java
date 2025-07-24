@@ -49,6 +49,8 @@ public class PessoaModel implements UserDetails{
     private String senha;
     @Column(length = 8)
     private String numero;
+    @Column(length = 10)
+    private String complemento;
     @Column(length = 100)
     private String logradouro;
     @Column(length = 50)
@@ -70,6 +72,7 @@ public class PessoaModel implements UserDetails{
         this.cpf = pessoaRequestDTO.cpf();
         this.cep = pessoaRequestDTO.cep();
         this.numero = pessoaRequestDTO.numero();
+        this.complemento = pessoaRequestDTO.complemento();
         this.email = pessoaRequestDTO.email();
         this.role = pessoaRequestDTO.role();
         this.senha = pessoaRequestDTO.senha();

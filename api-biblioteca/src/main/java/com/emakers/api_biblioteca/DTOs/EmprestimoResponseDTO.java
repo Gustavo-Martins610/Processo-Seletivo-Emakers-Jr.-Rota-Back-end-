@@ -7,6 +7,7 @@ import com.emakers.api_biblioteca.models.EmprestimoModel;
 
 public record EmprestimoResponseDTO(
 
+    Long idEmprestimo,
     Long idPessoa,
     Long idLivro,
     String nomepessoa,
@@ -17,8 +18,9 @@ public record EmprestimoResponseDTO(
 ) {
     public EmprestimoResponseDTO(EmprestimoModel emprestimo){
         this(
-        emprestimo.getId().getIdPessoa(),
-        emprestimo.getId().getIdLivro(),
+        emprestimo.getIdEmprestimo(),
+        emprestimo.getPessoa().getIdPessoa(),
+        emprestimo.getLivro().getIdLivro(),
         emprestimo.getPessoa().getNome(),
         emprestimo.getLivro().getNome(),
         emprestimo.getDataEmprestimo(),

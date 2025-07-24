@@ -12,16 +12,17 @@ import lombok.Setter;
 @Table(name = "Emprestimo")
 public class EmprestimoModel {
 
-    @EmbeddedId
-    private EmprestimoId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_emprestimo")
+    private Long idEmprestimo;
+
 
     @ManyToOne
-    @MapsId("idPessoa")
     @JoinColumn(name = "id_pessoa")
     private PessoaModel pessoa;
 
     @ManyToOne
-    @MapsId("idLivro")
     @JoinColumn(name = "id_livro")
     private LivroModel livro;
 

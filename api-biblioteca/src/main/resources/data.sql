@@ -1,5 +1,5 @@
 INSERT INTO pessoa (nome, cpf, cep, email, senha) VALUES 
-('João da Silva', '12345678900', '37500000', 'joao@email.com', 'senha123'),
+('João da Silva', '12345678900', '35501-248', 'joao@email.com', 'senha123'),
 ('Maria Oliveira', '98765432100', '37500100', 'maria@email.com', 'senha456'),
 ('Carlos Lima', '11122233344', '37500200', 'carlos@email.com', 'senha789'),
 ('Ana Beatriz', '22233344455', '37500300', 'ana@email.com', 'senhaabc'),

@@ -26,7 +26,7 @@ public class EmprestimoController {
     }
 
     @PostMapping(value = "/devolver/{idPessoa}/{idLivro}")
-    public ResponseEntity<EmprestimoResponseDTO> devolverLivro(@PathVariable Long idPessoa, @PathVariable Long idLivro) {
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.devolverLivro(idPessoa, idLivro));
+    public ResponseEntity<EmprestimoResponseDTO> devolverLivro(@PathVariable Long idEmprestimo) {
+        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.devolverLivro(idEmprestimo));
     }
 }

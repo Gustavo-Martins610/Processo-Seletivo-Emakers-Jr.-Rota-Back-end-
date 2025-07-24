@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.emakers.api_biblioteca.DTOs.EmprestimoRequestDTO;
 import com.emakers.api_biblioteca.DTOs.EmprestimoResponseDTO;
-import com.emakers.api_biblioteca.models.EmprestimoId;
 import com.emakers.api_biblioteca.models.EmprestimoModel;
 import com.emakers.api_biblioteca.models.LivroModel;
 import com.emakers.api_biblioteca.models.PessoaModel;
@@ -41,14 +40,9 @@ public class EmprestimoServiceImp implements EmprestimoService{
         throw new IllegalStateException("Livro não disponível para empréstimo");
     }
 
-    // Monta a chave composta
-    EmprestimoId id = new EmprestimoId();
-    id.setIdPessoa(pessoa.getIdPessoa());
-    id.setIdLivro(livro.getIdLivro());
 
     // Cria o empréstimo
     EmprestimoModel emprestimo = new EmprestimoModel();
-    emprestimo.setId(id);
     emprestimo.setPessoa(pessoa);
     emprestimo.setLivro(livro);
     emprestimo.setDataEmprestimo(LocalDate.now());
@@ -64,27 +58,21 @@ public class EmprestimoServiceImp implements EmprestimoService{
 }
 
     @Override
-    public EmprestimoResponseDTO devolverLivro(Long idPessoa, Long idLivro) {
-    EmprestimoId id = new EmprestimoId();
-    id.setIdPessoa(idPessoa);
-    id.setIdLivro(idLivro);
+    public EmprestimoResponseDTO devolverLivro(Long idEmprestimo) {
+        EmprestimoModel emprestimo = emprestimoRepository.findById(idEmprestimo)
+            .orElseThrow(() -> new IllegalArgumentException("Empréstimo não encontrado"));
 
-    EmprestimoModel emprestimo = emprestimoRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Empréstimo não encontrado"));
+        if (emprestimo.getDataDevolucao() != null) {
+            throw new IllegalStateException("Este livro já foi devolvido.");
+        }
 
-    if (emprestimo.getDataDevolucao() != null) {
-        throw new IllegalStateException("Este livro já foi devolvido.");
+        emprestimo.setDataDevolucao(LocalDate.now());
+        emprestimoRepository.save(emprestimo);
+
+        LivroModel livro = emprestimo.getLivro();
+        livro.setQuantidade(livro.getQuantidade() + 1);
+        livroRepository.save(livro);
+
+        return new EmprestimoResponseDTO(emprestimo);
     }
-
-    // Define data de devolução
-    emprestimo.setDataDevolucao(LocalDate.now());
-    emprestimoRepository.save(emprestimo);
-
-    // Atualiza quantidade de livros disponíveis
-    LivroModel livro = emprestimo.getLivro();
-    livro.setQuantidade(livro.getQuantidade() + 1);
-    livroRepository.save(livro);
-
-    return new EmprestimoResponseDTO(emprestimo);
-}
 }

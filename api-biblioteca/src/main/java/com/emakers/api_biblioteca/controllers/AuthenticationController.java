@@ -59,6 +59,7 @@ public class AuthenticationController {
         pessoa.setNome(pessoaRequestDTO.nome());
         pessoa.setCpf(pessoaRequestDTO.cpf());
         pessoa.setCep(pessoaRequestDTO.cep());
+        pessoa.setComplemento(pessoaRequestDTO.complemento());
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setSenha(encryptedSenha);
         pessoa.setRole(pessoaRequestDTO.role());

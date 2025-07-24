@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS Emprestimo(
+    idEmprestimo BIGSERIAL PRIMARY KEY,
     id_pessoa BIGINT NOT NULL,
     id_livro BIGINT NOT NULL,
     data_emprestimo DATE NOT NULL,
     data_devolucao DATE,
 
-    PRIMARY KEY (id_pessoa, id_livro),
 
     CONSTRAINT fk_emprestimo_pessoa FOREIGN KEY (id_pessoa)
         REFERENCES Pessoa(id_pessoa) ON DELETE CASCADE,
