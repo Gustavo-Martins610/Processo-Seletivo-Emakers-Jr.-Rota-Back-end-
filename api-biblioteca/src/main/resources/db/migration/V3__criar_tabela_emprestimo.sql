@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Emprestimo(
-    idEmprestimo BIGSERIAL PRIMARY KEY,
+    id_emprestimo BIGSERIAL PRIMARY KEY,
     id_pessoa BIGINT NOT NULL,
     id_livro BIGINT NOT NULL,
     data_emprestimo DATE NOT NULL,

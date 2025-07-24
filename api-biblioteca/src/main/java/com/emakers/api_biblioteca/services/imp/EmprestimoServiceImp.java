@@ -18,6 +18,8 @@ import com.emakers.api_biblioteca.services.EmprestimoService;
 @Service
 public class EmprestimoServiceImp implements EmprestimoService{
 
+    private static int Limite_Por_Pessoa = 3;
+
     @Autowired
     private EmprestimoRepository emprestimoRepository;
 
@@ -34,6 +36,11 @@ public class EmprestimoServiceImp implements EmprestimoService{
 
     PessoaModel pessoa = pessoaRepository.findById(emprestimorequestDTO.idPessoa())
         .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada"));
+
+    long emprestimosAtivos = emprestimoRepository.countByPessoaIdPessoaAndDataDevolucaoIsNull(pessoa.getIdPessoa());
+        if (emprestimosAtivos >= Limite_Por_Pessoa) {
+        throw new IllegalStateException("Limite de empréstimos atingido para esta pessoa.");
+        }
 
     
     if (livro.getQuantidade() <= 0) {

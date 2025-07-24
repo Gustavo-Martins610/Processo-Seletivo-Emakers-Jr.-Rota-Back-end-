@@ -7,5 +7,5 @@ import com.emakers.api_biblioteca.models.EmprestimoModel;
 
 @Repository
 public interface EmprestimoRepository extends JpaRepository<EmprestimoModel,Long> {
-
+    long countByPessoaIdPessoaAndDataDevolucaoIsNull(Long idPessoa);
 }
