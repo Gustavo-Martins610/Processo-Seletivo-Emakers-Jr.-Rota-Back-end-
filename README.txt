@@ -58,9 +58,9 @@ Para cada entidade (`Pessoa`, `Livro`):
 
     Etapa 6: Funcionalidades Extras (Recomendadas)
 - [ ] Subir aplicação com **Docker**
-- [ ] Implementar **limite de empréstimos por pessoa**
-- [ ] Listar livros atualmente emprestados por pessoa
-- [ ] Atualizar campo `quantidade` de livros automaticamente
+- [x] Implementar **limite de empréstimos por pessoa**
+- [x] Listar livros atualmente emprestados por pessoa
+- [x] Atualizar campo `quantidade` de livros automaticamente
 - [ ] Adicionar testes automatizados (Junit/Mockito)
 - [ ] Aplicar boas práticas REST (status HTTP, verbos corretos)
 - [x] Usar **padrão de commits semântico**:

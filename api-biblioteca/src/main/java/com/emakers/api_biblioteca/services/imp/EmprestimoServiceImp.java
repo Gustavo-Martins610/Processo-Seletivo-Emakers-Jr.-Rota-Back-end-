@@ -1,6 +1,7 @@
 package com.emakers.api_biblioteca.services.imp;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,4 +83,14 @@ public class EmprestimoServiceImp implements EmprestimoService{
 
         return new EmprestimoResponseDTO(emprestimo);
     }
+
+    @Override
+    public List<EmprestimoResponseDTO> listarEmprestimosAtivosPorPessoa(Long idPessoa) {
+    List<EmprestimoModel> emprestimos = emprestimoRepository
+        .findByPessoaIdPessoaAndDataDevolucaoIsNull(idPessoa);
+
+    return emprestimos.stream()
+        .map(EmprestimoResponseDTO::new)
+        .toList();
+}
 }
