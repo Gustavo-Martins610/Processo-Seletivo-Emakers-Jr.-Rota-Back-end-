@@ -1,2 +1,3 @@
-Bugs encontrados até o momento
--Requisição do create de livro/pessoa não está fuincionando devido aoos valores estarem sendo inseridos como nulos e da conflito com os campos que sao NotNull
+Bugs não consertados
+-O valor de número da pessoa é passado como NULL para o banco de dados não sei pq
+-Apesar da definição das roles, não está fazendo diferença, qualquer usuario está tendo acesso a todos os endpoints

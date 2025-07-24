@@ -12,11 +12,11 @@ public record PessoaRequestDTO(
     String cpf,
     @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "CEP inválido (formato esperado: 00000-000)")
     String cep,
-    String numero,
-    String complemento,
     @Email(message = "O E-mail fornecido é inválido")
     String email,
     String senha,
+    String numero,
+    String complemento,
     String logradouro,
     String bairro,
     String cidade,

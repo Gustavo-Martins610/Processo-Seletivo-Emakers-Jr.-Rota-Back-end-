@@ -62,7 +62,7 @@ Para cada entidade (`Pessoa`, `Livro`):
 - [x] Listar livros atualmente emprestados por pessoa
 - [x] Atualizar campo `quantidade` de livros automaticamente
 - [ ] Adicionar testes automatizados (Junit/Mockito)
-- [ ] Aplicar boas práticas REST (status HTTP, verbos corretos)
+- [x] Aplicar boas práticas REST (status HTTP, verbos corretos)
 - [x] Usar **padrão de commits semântico**:
   - `add:` nova funcionalidade
   - `fix:` correção de bug

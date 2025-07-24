@@ -33,11 +33,11 @@ public class LivroModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idLivro;
-    @Column(length = 100, nullable = false) //define o tamanho e a restrição do campo
+    @Column(length = 100, nullable = false)
     private String nome;
     @Column(length = 100, nullable = false)
     private String autor;
-    @Temporal(TemporalType.DATE) // indica que o campo será armazenado como DATE (sem as horas como é padrão do Java.util)
+    @Temporal(TemporalType.DATE)
     private LocalDate data_lancamento;
     @Column(nullable = false)
     private Integer quantidade;
