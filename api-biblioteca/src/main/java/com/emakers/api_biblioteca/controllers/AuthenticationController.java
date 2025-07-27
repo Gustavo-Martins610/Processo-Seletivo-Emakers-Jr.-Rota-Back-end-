@@ -21,11 +21,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 @RestController
 @RequestMapping("auth")
 
+@Tag(name = "Autenticação", description = "Endpoints para login e registro de usuários")
 public class AuthenticationController {
 
     @Autowired
@@ -38,6 +43,14 @@ public class AuthenticationController {
     @Autowired
     ViaCepService viaCepService;
 
+    @Operation(
+        summary = "Login do usuário",
+        description = "Autentica um usuário existente. Retorna o token JWT se as credenciais estiverem corretas."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
         var pessoaSenha = new UsernamePasswordAuthenticationToken(pessoaRequestDTO.email(), pessoaRequestDTO.senha());
@@ -47,6 +60,15 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
+
+    @Operation(
+        summary = "Registrar novo usuário",
+        description = "Cria um novo usuário na aplicação. Retorna o token JWT e as informações do usuário."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+    })
     @PostMapping("/register")
     public ResponseEntity<PessoaResponseDTO> register(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
         if(this.pessoaRepository.findByEmail(pessoaRequestDTO.email()) != null){

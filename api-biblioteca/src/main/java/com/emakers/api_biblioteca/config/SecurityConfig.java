@@ -26,11 +26,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/livro").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/livro").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET,"/pessoa").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/pessoa/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/pessoa").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/pessoa").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -38,6 +39,7 @@ public class SecurityConfig {
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
+    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();

@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.emakers</groupId>
     <artifactId>api-biblioteca</artifactId>
@@ -19,7 +19,6 @@
     </properties>
 
     <dependencies>
-        <!-- Flyway para migrações do banco de dados -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -102,17 +101,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            
-            <!-- Plugin do Flyway para gerenciamento de migrações de banco de dados -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>9.22.3</version> <!-- Versão do Flyway -->
+                <version>9.22.3</version> 
                 <executions>
                     <execution>
                         <goals>
-                            <goal>migrate</goal> <!-- Executa as migrações -->
-                            <goal>repair</goal> <!-- Repara o histórico das migrações -->
+                            <goal>migrate</goal>
+                            <goal>repair</goal> 
                         </goals>
                     </execution>
                 </executions>
