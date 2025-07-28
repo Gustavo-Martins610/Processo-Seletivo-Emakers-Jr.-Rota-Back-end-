@@ -51,8 +51,8 @@ Para cada entidade (`Pessoa`, `Livro`):
     Etapa 5: Segurança e Documentação
 - [x] Implementar autenticação com **Spring Security**
 - [x] Proteger rotas com autenticação
-- [ ] Documentar a API com **Swagger**
-- [x] Criar tratamento global de exceções (`@ControllerAdvice`)
+- [x] Documentar a API com **Swagger**
+- [] Criar tratamento global de exceções (`@ControllerAdvice`)
 
 ---
 

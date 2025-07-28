@@ -1,3 +1,1 @@
 Bugs não consertados
--O valor de número da pessoa é passado como NULL para o banco de dados não sei pq
--Apesar da definição das roles, não está fazendo diferença, qualquer usuario está tendo acesso a todos os endpoints
