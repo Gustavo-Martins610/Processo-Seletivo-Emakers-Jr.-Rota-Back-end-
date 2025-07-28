@@ -12,20 +12,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
-import com.emakers.api_biblioteca.repositories.LivroRepository;
+import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
+import com.emakers.api_biblioteca.exceptions.ValidationException;
 import com.emakers.api_biblioteca.services.LivroService;
-
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
 
@@ -34,11 +27,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/livro")
 public class LivroController {
 
-@Autowired
-LivroRepository LivroRepository;
     @Autowired
     private LivroService livroService;
-
 
     @Operation(
         summary = "Listar todos os livros",
@@ -47,11 +37,10 @@ LivroRepository LivroRepository;
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de livros retornada com sucesso", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
     })
-    @GetMapping(value = "/all")
-    public ResponseEntity<List<LivroResponseDTO>> pegartodoslivros(){
-        return ResponseEntity.status(HttpStatus.OK).body(livroService.pegartodoslivros());
+    @GetMapping("/all")
+    public ResponseEntity<List<LivroResponseDTO>> pegartodoslivros() {
+        return ResponseEntity.ok(livroService.pegartodoslivros());
     }
-
 
     @Operation(
         summary = "Buscar livro por ID",
@@ -61,11 +50,16 @@ LivroRepository LivroRepository;
         @ApiResponse(responseCode = "200", description = "Livro encontrado", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
         @ApiResponse(responseCode = "404", description = "Livro não encontrado")  
     })
-    @GetMapping(value = "/{idLivro}")
-    public ResponseEntity<LivroResponseDTO> pegarlivroporid(@Parameter(description = "ID do livro") @PathVariable("idLivro") Long idlivro){
-         return ResponseEntity.status(HttpStatus.OK).body(livroService.pegarlivroporid(idlivro));
+    @GetMapping("/{idLivro}")
+    public ResponseEntity<LivroResponseDTO> pegarlivroporid(
+            @Parameter(description = "ID do livro") @PathVariable("idLivro") Long idlivro) {
+        try {
+            LivroResponseDTO response = livroService.pegarlivroporid(idlivro);
+            return ResponseEntity.ok(response);
+        } catch (LivroNotFoundException ex) {
+            throw ex;
+        }
     }
-
 
     @Operation(
         summary = "Cadastrar um novo livro",
@@ -74,26 +68,41 @@ LivroRepository LivroRepository;
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Livro cadastrado com sucesso", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
         @ApiResponse(responseCode = "400", description = "Requisição inválida"),
-        @ApiResponse(responseCode = "401", description = "Não autorizado")
+        @ApiResponse(responseCode = "409", description = "Livro já cadastrado")
     })
-    @PostMapping(value = "/create")
-    public ResponseEntity<LivroResponseDTO> salvarlivro(@Valid @RequestBody LivroRequestDTO livroRequestDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.salvarlivro(livroRequestDTO));
+    @PostMapping("/create")
+    public ResponseEntity<LivroResponseDTO> salvarlivro(
+            @Valid @RequestBody LivroRequestDTO livroRequestDTO) {
+        try {
+            LivroResponseDTO response = livroService.salvarlivro(livroRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (ValidationException ex) {
+            throw ex;
+        }
     }
 
-
-    @Operation(summary = "Atualizar uma pessoa")
+    @Operation(
+        summary = "Atualizar livro",
+        description = "Atualiza as informações de um livro pelo ID."
+    )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Livro atualizado"),
+        @ApiResponse(responseCode = "200", description = "Livro atualizado", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
         @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-        @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
+        @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
-    @PostMapping(value = "/update")
-    public ResponseEntity <LivroResponseDTO> mudarnomelivro(@Valid @PathVariable @Parameter(description = "ID do livro", example = "1") Long idlivro
-    ,@Valid @RequestBody @Parameter(description = "Dados atualizados do Livro") LivroRequestDTO livroRequestDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(livroService.mudarnomelivro(idlivro,livroRequestDTO));
+    @PostMapping("/update/{idLivro}")
+    public ResponseEntity<LivroResponseDTO> mudarnomelivro(
+            @Parameter(description = "ID do livro", example = "1") @PathVariable Long idLivro,
+            @Valid @RequestBody LivroRequestDTO livroRequestDTO) {
+        try {
+            LivroResponseDTO response = livroService.mudarnomelivro(idLivro, livroRequestDTO);
+            return ResponseEntity.ok(response);
+        } catch (LivroNotFoundException ex) {
+            throw ex;
+        } catch (ValidationException ex) {
+            throw ex;
+        }
     }
-
 
     @Operation(
         summary = "Deletar livro",
@@ -101,13 +110,16 @@ LivroRepository LivroRepository;
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Livro removido com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autorizado")
+        @ApiResponse(responseCode = "404", description = "Livro não encontrado")
     })
-    @DeleteMapping(value = "/delete/{idLivro}")
-    public ResponseEntity <String> deletarlivro(@Parameter(description = "ID do livro a ser removido") @PathVariable("idLivro") Long idlivro){
-        return ResponseEntity.status(HttpStatus.OK).body(livroService.deletarlivro(idlivro));
+    @DeleteMapping("/delete/{idLivro}")
+    public ResponseEntity<Void> deletarlivro(
+            @Parameter(description = "ID do livro a ser removido") @PathVariable("idLivro") Long idLivro) {
+        try {
+            livroService.deletarlivro(idLivro);
+            return ResponseEntity.noContent().build();
+        } catch (LivroNotFoundException ex) {
+            throw ex;
+        }
     }
-
 }
-

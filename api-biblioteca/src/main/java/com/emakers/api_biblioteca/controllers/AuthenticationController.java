@@ -7,16 +7,18 @@ import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 import com.emakers.api_biblioteca.Users.LoginResponseDTO;
+import com.emakers.api_biblioteca.exceptions.CredenciaisInvalidasException;
+import com.emakers.api_biblioteca.exceptions.EmailJaCadastradoException;
 import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.TokenService;
 import com.emakers.api_biblioteca.services.ViaCepService;
 
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +28,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-
 @RestController
 @RequestMapping("auth")
-
 @Tag(name = "Autenticação", description = "Endpoints para login e registro de usuários")
 public class AuthenticationController {
 
@@ -49,17 +49,21 @@ public class AuthenticationController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
+        @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
-        var pessoaSenha = new UsernamePasswordAuthenticationToken(pessoaRequestDTO.email(), pessoaRequestDTO.senha());
-        var auth = this.authenticationManager.authenticate(pessoaSenha);
+        try {
+            var pessoaSenha = new UsernamePasswordAuthenticationToken(pessoaRequestDTO.email(), pessoaRequestDTO.senha());
+            var auth = this.authenticationManager.authenticate(pessoaSenha);
 
-        var token = tokenService.generateToken((PessoaModel)auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+            var token = tokenService.generateToken((PessoaModel)auth.getPrincipal());
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+        } catch (BadCredentialsException e) {
+            throw new CredenciaisInvalidasException("E-mail ou senha inválidos.");
+        }
     }
-
 
     @Operation(
         summary = "Registrar novo usuário",
@@ -67,12 +71,13 @@ public class AuthenticationController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso"),
+        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
     @PostMapping("/register")
     public ResponseEntity<PessoaResponseDTO> register(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
         if(this.pessoaRepository.findByEmail(pessoaRequestDTO.email()) != null){
-        return ResponseEntity.badRequest().build();
+            throw new EmailJaCadastradoException("E-mail já cadastrado.");
         }
 
         String encryptedSenha = new BCryptPasswordEncoder().encode(pessoaRequestDTO.senha());
@@ -91,8 +96,8 @@ public class AuthenticationController {
         pessoa.setCidade(endereco.getLocalidade());
         pessoa.setEstado(endereco.getUf());
 
-       this.pessoaRepository.save(pessoa);
-       return ResponseEntity.ok().build();
+        this.pessoaRepository.save(pessoa);
+        return ResponseEntity.ok().build();
     }
-    
+
 }
