@@ -4,6 +4,7 @@ import com.emakers.api_biblioteca.Users.UserRole;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "DTO para criação de uma nova pessoa")

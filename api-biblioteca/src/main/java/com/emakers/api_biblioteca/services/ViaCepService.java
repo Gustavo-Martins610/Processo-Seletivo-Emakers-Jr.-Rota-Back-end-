@@ -6,7 +6,11 @@ import org.springframework.web.client.RestTemplate;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 @Service
 public class ViaCepService {
-    private final RestTemplate restTemplate = new RestTemplate();
+
+    private RestTemplate restTemplate = new RestTemplate();
+    public ViaCepService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public ViaCepResponseDTO consultarCep(String cep) {
         String url = "https://viacep.com.br/ws/" + cep + "/json/";

@@ -39,6 +39,16 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
+    public void setPessoaService(PessoaService pessoaService) {
+    this.pessoaService = pessoaService;
+    }
+    public void setViaCepService(ViaCepService viaCepService) {
+    this.viaCepService = viaCepService;
+    }
+    public void setPessoaRepository(PessoaRepository pessoaRepository) {
+    this.pessoaRepository = pessoaRepository;
+    }
+
     @Operation(summary = "Listar todas as pessoas")
     @ApiResponse(responseCode = "200", description = "Lista de pessoas")
     @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
