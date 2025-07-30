@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_biblioteca
+    restart: always
+    environment:
+      POSTGRES_DB: basededados-biblioteca
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: R@osemeire12
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: api_biblioteca
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/basededados-biblioteca
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: R@osemeire12
+    ports:
+      - "8080:8080"
+    links:
+      - db
+
+volumes:
+  postgres_data:
