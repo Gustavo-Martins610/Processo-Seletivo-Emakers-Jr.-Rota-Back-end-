@@ -52,16 +52,16 @@ Para cada entidade (`Pessoa`, `Livro`):
 - [x] Implementar autenticação com **Spring Security**
 - [x] Proteger rotas com autenticação
 - [x] Documentar a API com **Swagger**
-- [] Criar tratamento global de exceções (`@ControllerAdvice`)
+- [x] Criar tratamento global de exceções (`@ControllerAdvice`)
 
 ---
 
     Etapa 6: Funcionalidades Extras (Recomendadas)
-- [ ] Subir aplicação com **Docker**
+- [x] Subir aplicação com **Docker**
 - [x] Implementar **limite de empréstimos por pessoa**
 - [x] Listar livros atualmente emprestados por pessoa
 - [x] Atualizar campo `quantidade` de livros automaticamente
-- [ ] Adicionar testes automatizados (Junit/Mockito)
+- [x] Adicionar testes automatizados (Junit/Mockito)
 - [x] Aplicar boas práticas REST (status HTTP, verbos corretos)
 - [x] Usar **padrão de commits semântico**:
   - `add:` nova funcionalidade
@@ -71,11 +71,11 @@ Para cada entidade (`Pessoa`, `Livro`):
 ---
 
     Etapa 7: Finalização e Entrega
-- [ ] Garantir que todos os requisitos estão implementados
-- [ ] Atualizar `README.md` com:
-  - [ ] Descrição do projeto
-  - [ ] Como rodar
-  - [ ] Como testar
-  - [ ] Tecnologias utilizadas
-- [ ] Subir versão final no GitHub
-- [ ] Enviar link do repositório no Discord da Emakers
+- [x] Garantir que todos os requisitos estão implementados
+- [x] Atualizar `README.md` com:
+  - [x] Descrição do projeto
+  - [x] Como rodar
+  - [x] Como testar
+  - [x] Tecnologias utilizadas
+- [x] Subir versão final no GitHub
+- [x] Enviar link do repositório no Discord da Emakers
