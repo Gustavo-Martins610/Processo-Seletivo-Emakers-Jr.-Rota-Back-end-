@@ -7,6 +7,7 @@ import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 import com.emakers.api_biblioteca.Users.LoginResponseDTO;
+import com.emakers.api_biblioteca.Users.UserRole;
 import com.emakers.api_biblioteca.exceptions.CredenciaisInvalidasException;
 import com.emakers.api_biblioteca.exceptions.EmailJaCadastradoException;
 import com.emakers.api_biblioteca.models.PessoaModel;
@@ -35,7 +36,6 @@ public class AuthenticationController {
 
     @Autowired
     PessoaRepository pessoaRepository;
-
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -89,12 +89,12 @@ public class AuthenticationController {
         pessoa.setComplemento(pessoaRequestDTO.complemento());
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setSenha(encryptedSenha);
-        pessoa.setRole(pessoaRequestDTO.role());
         pessoa.setNumero(pessoaRequestDTO.numero());
         pessoa.setLogradouro(endereco.getLogradouro());
         pessoa.setBairro(endereco.getBairro());
         pessoa.setCidade(endereco.getLocalidade());
         pessoa.setEstado(endereco.getUf());
+        pessoa.setRole(UserRole.USER);
 
         this.pessoaRepository.save(pessoa);
         return ResponseEntity.ok().build();

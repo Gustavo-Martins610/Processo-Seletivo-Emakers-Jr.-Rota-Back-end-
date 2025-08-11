@@ -11,11 +11,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
+import com.emakers.api_biblioteca.DTOs.PessoaUpdateDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
+import com.emakers.api_biblioteca.Users.UserRole;
 import com.emakers.api_biblioteca.exceptions.PessoaNotFoundException;
 import com.emakers.api_biblioteca.exceptions.ValidationException;
 import com.emakers.api_biblioteca.models.PessoaModel;
@@ -38,6 +41,9 @@ public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void setPessoaService(PessoaService pessoaService) {
     this.pessoaService = pessoaService;
@@ -94,14 +100,14 @@ public class PessoaController {
             pessoa.setCpf(pessoaRequestDTO.cpf());
             pessoa.setCep(pessoaRequestDTO.cep());
             pessoa.setEmail(pessoaRequestDTO.email());
-            pessoa.setSenha(pessoaRequestDTO.senha());
-            pessoa.setRole(pessoaRequestDTO.role());
+            pessoa.setSenha(passwordEncoder.encode(pessoaRequestDTO.senha()));
             pessoa.setNumero(pessoaRequestDTO.numero());
             pessoa.setComplemento(pessoaRequestDTO.complemento());
             pessoa.setLogradouro(endereco.getLogradouro());
             pessoa.setBairro(endereco.getBairro());
             pessoa.setCidade(endereco.getLocalidade());
             pessoa.setEstado(endereco.getUf());
+            pessoa.setRole(UserRole.USER);
 
             pessoaRepository.save(pessoa);
             return ResponseEntity.status(HttpStatus.CREATED).body(new PessoaResponseDTO(pessoa));
@@ -117,12 +123,12 @@ public class PessoaController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
-    @PostMapping("/update/{idPessoa}")
-    public ResponseEntity<PessoaResponseDTO> mudarnomepessoa(
+    @PatchMapping("/update/{idPessoa}")
+    public ResponseEntity<PessoaResponseDTO> atualizarpessoa(
             @Valid @PathVariable("idPessoa") @Parameter(description = "ID da pessoa", example = "1") Long idpessoa,
-            @Valid @RequestBody @Parameter(description = "Dados atualizados da pessoa") PessoaRequestDTO pessoaRequestDTO) {
+            @Valid @RequestBody @Parameter(description = "Dados atualizados da pessoa") PessoaUpdateDTO pessoaupdateDTO) {
         try {
-            PessoaResponseDTO response = pessoaService.mudarnomepessoa(idpessoa, pessoaRequestDTO);
+            PessoaResponseDTO response = pessoaService.atualizarpessoa(idpessoa, pessoaupdateDTO);
             return ResponseEntity.ok(response);
         } catch (PessoaNotFoundException ex) {
             throw ex;

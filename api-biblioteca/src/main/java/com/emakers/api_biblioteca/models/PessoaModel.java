@@ -71,11 +71,10 @@ public class PessoaModel implements UserDetails{
         this.nome = pessoaRequestDTO.nome();
         this.cpf = pessoaRequestDTO.cpf();
         this.cep = pessoaRequestDTO.cep();
+        this.email = pessoaRequestDTO.email();
+        this.senha = pessoaRequestDTO.senha();
         this.numero = pessoaRequestDTO.numero();
         this.complemento = pessoaRequestDTO.complemento();
-        this.email = pessoaRequestDTO.email();
-        this.role = pessoaRequestDTO.role();
-        this.senha = pessoaRequestDTO.senha();
         this.logradouro = pessoaRequestDTO.logradouro();
         this.bairro = pessoaRequestDTO.bairro();
         this.cidade = pessoaRequestDTO.cidade();

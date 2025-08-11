@@ -23,6 +23,11 @@ Clone o repositório para o seu computador: git clone https://github.com/Gustavo
 2.2 Instalando Dependências
 Certifique-se de que você tenha o Docker instalado. A seguir, você pode subir a aplicação com Docker para facilitar a configuração do banco de dados.
 Subindo a API e o banco de dados com Docker
+Atualize o aplication.properties para fazer a conexão com o banco de dados
+
+spring.datasource.url=jdbc:postgresql://db:5432/biblioteca se for rodar com docker
+spring.datasource.url=jdbc:postgresql://localhost:5432/basededados-biblioteca se for rodar no local host
+
 Se você já tiver configurado o arquivo docker-compose.yml, pode rodar o seguinte comando: docker-compose up --build
 Esse comando irá criar e rodar os containers para a aplicação e o banco de dados PostgreSQL.
 

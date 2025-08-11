@@ -90,12 +90,12 @@ public class LivroController {
         @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
         @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
-    @PostMapping("/update/{idLivro}")
+    @PatchMapping("/update/{idLivro}")
     public ResponseEntity<LivroResponseDTO> mudarnomelivro(
             @Parameter(description = "ID do livro", example = "1") @PathVariable Long idLivro,
             @Valid @RequestBody LivroRequestDTO livroRequestDTO) {
         try {
-            LivroResponseDTO response = livroService.mudarnomelivro(idLivro, livroRequestDTO);
+            LivroResponseDTO response = livroService.atualizarlivro(idLivro, livroRequestDTO);
             return ResponseEntity.ok(response);
         } catch (LivroNotFoundException ex) {
             throw ex;

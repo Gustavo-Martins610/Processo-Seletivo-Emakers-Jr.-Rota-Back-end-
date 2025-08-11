@@ -92,7 +92,7 @@ class LivroServiceTest {
         when(livroRepository.findById(2L)).thenReturn(Optional.of(livro));
         when(livroRepository.save(any(LivroModel.class))).thenReturn(livro);
 
-        LivroResponseDTO result = livroService.mudarnomelivro(2L, dto);
+        LivroResponseDTO result = livroService.atualizarlivro(2L, dto);
 
         assertEquals("Novo Nome", result.nome());
     }
@@ -102,7 +102,7 @@ class LivroServiceTest {
         LivroRequestDTO dto = mock(LivroRequestDTO.class);
         when(livroRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeErrorException.class, () -> livroService.mudarnomelivro(99L, dto));
+        assertThrows(RuntimeErrorException.class, () -> livroService.atualizarlivro(99L, dto));
     }
 
     @Test

@@ -2,7 +2,7 @@ package com.emakers.api_biblioteca.Testes;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
-import com.emakers.api_biblioteca.Users.UserRole;
+import com.emakers.api_biblioteca.DTOs.PessoaUpdateDTO;
 import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.PessoaService;
@@ -71,7 +71,7 @@ class PessoaServiceTest {
     @Test
     void testSalvarpessoa() {
         PessoaRequestDTO dto = new PessoaRequestDTO("Ana","123.456.789-10","37300-247","analuisa@gmail.com", "123456789", "980", "AP202", "Rua candeias", 
-        "São José", "Lavras", "MG", UserRole.ADMIN);
+        "São José", "Lavras", "MG");
         PessoaModel pessoa = new PessoaModel(dto);
         pessoa.setNome("Ana");
 
@@ -84,15 +84,14 @@ class PessoaServiceTest {
 
     @Test
     void testMudarnomepessoa_Success() {
-        PessoaRequestDTO dto = new PessoaRequestDTO("Roberta","123.456.789-10","37300-247","roberta@gmail.com", "123456789", "980", "AP202", "Rua candeias", 
-        "São José", "Lavras", "MG", UserRole.ADMIN);
+        PessoaUpdateDTO dto = new PessoaUpdateDTO("Roberta","123.456.789-10","37300-247","roberta@gmail.com", "123456789", "980", "AP202");
         PessoaModel pessoa = new PessoaModel();
         pessoa.setIdPessoa(1L);
         pessoa.setNome("Roberto");
         when(pessoaRepository.findById(1L)).thenReturn(Optional.of(pessoa));
         when(pessoaRepository.save(any(PessoaModel.class))).thenReturn(pessoa);
 
-        PessoaResponseDTO resultado = pessoaService.mudarnomepessoa(1L, dto);
+        PessoaResponseDTO resultado = pessoaService.atualizarpessoa(1L, dto);
 
         assertEquals("Roberta", resultado.nome());
     }

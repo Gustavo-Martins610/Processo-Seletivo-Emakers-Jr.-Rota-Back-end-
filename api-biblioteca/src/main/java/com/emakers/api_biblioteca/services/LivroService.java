@@ -37,9 +37,21 @@ public class LivroService {
         return new LivroResponseDTO(livro);
     }
 
-    public LivroResponseDTO mudarnomelivro(Long idlivro, LivroRequestDTO livroRequestDTO){
+    public LivroResponseDTO atualizarlivro(Long idlivro, LivroRequestDTO livroRequestDTO){
         LivroModel livro = (livroRepository.findById(idlivro).orElseThrow(()-> new RuntimeErrorException(null, "ID não encontrado")));
-        livro.setNome(livroRequestDTO.nome());
+        if (livroRequestDTO.nome() != null && !livroRequestDTO.nome().isBlank()) {
+            livro.setNome(livroRequestDTO.nome());
+        }
+        if (livroRequestDTO.autor() != null && !livroRequestDTO.autor().isBlank()) {
+            livro.setAutor(livroRequestDTO.autor());
+        }
+        if (livroRequestDTO.data_lancamento() != null) {
+            livro.setData_lancamento(livroRequestDTO.data_lancamento());
+        }
+        if (livroRequestDTO.quantidade() != null) {
+            livro.setQuantidade(livroRequestDTO.quantidade());
+        }
+        
         livroRepository.save(livro);
 
         return new LivroResponseDTO(livro);

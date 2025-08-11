@@ -88,7 +88,7 @@ class LivroControllerUnitTest {
         LivroRequestDTO request = new LivroRequestDTO("Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15);
         LivroResponseDTO response = new LivroResponseDTO(idLivro, "Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15);
 
-        Mockito.when(livroService.mudarnomelivro(eq(idLivro), any(LivroRequestDTO.class))).thenReturn(response);
+        Mockito.when(livroService.atualizarlivro(eq(idLivro), any(LivroRequestDTO.class))).thenReturn(response);
 
         ResponseEntity<LivroResponseDTO> resp = livroController.mudarnomelivro(idLivro, request);
 
@@ -101,7 +101,7 @@ class LivroControllerUnitTest {
         Long idLivro = 999L;
         LivroRequestDTO request = new LivroRequestDTO("Qualquer", "Machado de Assis", LocalDate.of(1899, 2, 1), 1);
 
-        Mockito.when(livroService.mudarnomelivro(eq(idLivro), any(LivroRequestDTO.class))).thenThrow(new LivroNotFoundException("Livro não encontrado"));
+        Mockito.when(livroService.atualizarlivro(eq(idLivro), any(LivroRequestDTO.class))).thenThrow(new LivroNotFoundException("Livro não encontrado"));
 
         assertThrows(LivroNotFoundException.class, () -> livroController.mudarnomelivro(idLivro, request));
     }

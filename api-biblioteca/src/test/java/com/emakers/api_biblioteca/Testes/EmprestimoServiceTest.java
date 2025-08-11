@@ -16,7 +16,7 @@ import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.EmprestimoRepository;
 import com.emakers.api_biblioteca.repositories.LivroRepository;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
-import com.emakers.api_biblioteca.services.imp.EmprestimoServiceImp;
+import com.emakers.api_biblioteca.services.EmprestimoService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class EmprestimoServiceImpTest {
     private PessoaRepository pessoaRepository;
 
     @InjectMocks
-    private EmprestimoServiceImp emprestimoService;
+    private EmprestimoService emprestimoService;
 
     @BeforeEach
     void setUp() {

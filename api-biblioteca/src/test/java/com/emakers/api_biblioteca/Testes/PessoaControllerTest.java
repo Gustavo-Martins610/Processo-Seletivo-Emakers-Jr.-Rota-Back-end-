@@ -2,6 +2,7 @@ package com.emakers.api_biblioteca.Testes;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
+import com.emakers.api_biblioteca.DTOs.PessoaUpdateDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 import com.emakers.api_biblioteca.controllers.PessoaController;
 import com.emakers.api_biblioteca.exceptions.PessoaNotFoundException;
@@ -82,7 +83,7 @@ class PessoaControllerTest {
 
     @Test
     void testSalvarPessoa_Sucesso() {
-        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35501-248", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER);
+        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35501-248", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         PessoaModel pessoaModel = new PessoaModel();
         pessoaModel.setNome("Fulano");
         pessoaModel.setEmail("fulano@email.com");
@@ -107,7 +108,7 @@ class PessoaControllerTest {
 
     @Test
     void testSalvarPessoa_EmailJaCadastrado() {
-        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER);
+        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("novo@email.com")).thenReturn(new PessoaModel());
 
         assertThrows(ValidationException.class, () -> {
@@ -118,12 +119,12 @@ class PessoaControllerTest {
     @Test
     void testMudarnomePessoa_Sucesso() {
         Long id = 1L;
-        PessoaRequestDTO req = new PessoaRequestDTO("Nome", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER);
+        PessoaUpdateDTO req = new PessoaUpdateDTO("Nome", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202");
         PessoaResponseDTO resp = new PessoaResponseDTO(id,"NovoNome", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER);
 
-        when(pessoaService.mudarnomepessoa(eq(id), any(PessoaRequestDTO.class))).thenReturn(resp);
+        when(pessoaService.atualizarpessoa(eq(id), any(PessoaUpdateDTO.class))).thenReturn(resp);
 
-        ResponseEntity<PessoaResponseDTO> response = pessoaController.mudarnomepessoa(id, req);
+        ResponseEntity<PessoaResponseDTO> response = pessoaController.atualizarpessoa(id, req);
 
         assertEquals(200, response.getStatusCode().value());
         assertEquals("NovoNome", response.getBody().nome());
@@ -132,12 +133,12 @@ class PessoaControllerTest {
     @Test
     void testMudarnomePessoa_NotFound() {
         Long id = 99L;
-        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER);
-        when(pessoaService.mudarnomepessoa(eq(id), any(PessoaRequestDTO.class)))
+        PessoaUpdateDTO req = new PessoaUpdateDTO("Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202");
+        when(pessoaService.atualizarpessoa(eq(id), any(PessoaUpdateDTO.class)))
                 .thenThrow(new PessoaNotFoundException("Pessoa não encontrada"));
 
         assertThrows(PessoaNotFoundException.class, () -> {
-            pessoaController.mudarnomepessoa(id, req);
+            pessoaController.atualizarpessoa(id, req);
         });
     }
 

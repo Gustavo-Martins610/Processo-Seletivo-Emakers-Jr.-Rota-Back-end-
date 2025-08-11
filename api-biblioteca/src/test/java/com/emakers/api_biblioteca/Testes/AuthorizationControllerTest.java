@@ -4,7 +4,6 @@ import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 import com.emakers.api_biblioteca.Users.LoginResponseDTO;
-import com.emakers.api_biblioteca.Users.UserRole;
 import com.emakers.api_biblioteca.controllers.AuthenticationController;
 import com.emakers.api_biblioteca.exceptions.CredenciaisInvalidasException;
 import com.emakers.api_biblioteca.exceptions.EmailJaCadastradoException;
@@ -65,8 +64,7 @@ class AuthenticationControllerTest {
     void testLogin_Success() {
         PessoaRequestDTO loginReq = new PessoaRequestDTO(
             "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER
-        );
+            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
 
         // Mocks para autenticação e geração de token
         Authentication auth = mock(Authentication.class);
@@ -87,8 +85,7 @@ class AuthenticationControllerTest {
     void testLogin_BadCredentials() {
         PessoaRequestDTO loginReq = new PessoaRequestDTO(
             "fulano", "12345678901", "35500-200", "fulano@email.com", "senhaerrada",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER
-        );
+            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Bad credentials"));
@@ -102,8 +99,7 @@ class AuthenticationControllerTest {
     void testRegister_Success() {
         PessoaRequestDTO req = new PessoaRequestDTO(
             "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER
-        );
+            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("fulano@email.com")).thenReturn(null);
         when(viaCepService.consultarCep("35500-200")).thenReturn(
             new ViaCepResponseDTO("35500-200","rua martins","São José","Lavras","MG")
@@ -120,8 +116,7 @@ class AuthenticationControllerTest {
     void testRegister_EmailJaCadastrado() {
         PessoaRequestDTO req = new PessoaRequestDTO(
             "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG", UserRole.USER
-        );
+            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("fulano@email.com")).thenReturn(new PessoaModel());
 
         assertThrows(EmailJaCadastradoException.class, () -> {

@@ -1,7 +1,5 @@
 package com.emakers.api_biblioteca.DTOs;
 
-import com.emakers.api_biblioteca.Users.UserRole;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
@@ -33,8 +31,6 @@ public record PessoaRequestDTO(
     @Schema(description = "Cidade da pessoa", example = "Lavras")
     String cidade,
     @Schema(description = "Estado da pessoa", example = "MG")
-    String estado,
-    @Schema(description = "Role da Pessoa para permitir/bloquear acessos", example = "ADMIN")
-    UserRole role
+    String estado
 ) {
 }
