@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.EmprestimoRequestDTO;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 
 @Tag(name = "Emprestimos", description = "Operações relacionadas ao emprestimo de livros da biblioteca")
 @RestController
@@ -38,6 +40,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa ou livro não encontrado"),
         @ApiResponse(responseCode = "409", description = "Recurso em conflito (ex: já emprestado)")
     })
+    
     @PostMapping("/criar")
     public ResponseEntity<EmprestimoResponseDTO> emprestarLivro(
             @Parameter(description = "Dados do empréstimo") @Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
@@ -59,6 +62,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "200", description = "Devolução registrada com sucesso"),
         @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
+
     @PostMapping("/devolver/{idEmprestimo}")
     public ResponseEntity<EmprestimoResponseDTO> devolverLivro(
             @Parameter(description = "ID do empréstimo", example = "1") @PathVariable Long idEmprestimo) {
@@ -81,9 +85,9 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+    @PreAuthorize("hasRole('ADMIN')") //fazer me
     @GetMapping("/pessoa/{idPessoa}/ativos")
-    public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(
-            @Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
+    public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(@Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa);
             return ResponseEntity.ok(response);
@@ -91,4 +95,16 @@ public class EmprestimoController {
             throw ex;
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/pessoa/{idPessoa}/listar")
+    public ResponseEntity<List<EmprestimoResponseDTO>> ListarEmprestimosDevolvidos(@PathVariable Long idPessoa) {
+        try {
+            List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosDevolvidos(idPessoa, "Devolvido");
+            return ResponseEntity.ok(response);
+        } catch (PessoaNotFoundException ex) {
+            throw ex;
+        }
+    }
+    
 }

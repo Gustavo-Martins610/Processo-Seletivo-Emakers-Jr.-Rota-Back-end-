@@ -59,7 +59,6 @@ public record PessoaResponseDTO(
     }
 
     public void setRole(UserRole admin) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setRole'");
     }
 }

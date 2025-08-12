@@ -5,8 +5,12 @@ import jakarta.validation.constraints.Pattern;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+
 @Schema(description = "DTO para criação de uma nova pessoa")
 public record PessoaRequestDTO(
+
+    @Schema(description = "ID único da pessoa", example = "1")
+    Long idPessoa,
     @Schema(description = "Nome completo da pessoa", example = "João da Silva")
     String nome,
     @Schema(description = "CPF da pessoa", example = "123.456.789-00")

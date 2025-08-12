@@ -52,18 +52,21 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
         @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
-        try {
-            var pessoaSenha = new UsernamePasswordAuthenticationToken(pessoaRequestDTO.email(), pessoaRequestDTO.senha());
-            var auth = this.authenticationManager.authenticate(pessoaSenha);
 
-            var token = tokenService.generateToken((PessoaModel)auth.getPrincipal());
-            return ResponseEntity.ok(new LoginResponseDTO(token));
-        } catch (BadCredentialsException e) {
-            throw new CredenciaisInvalidasException("E-mail ou senha inválidos.");
-        }
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO) {
+    try {
+        var authToken = new UsernamePasswordAuthenticationToken(pessoaRequestDTO.email(),pessoaRequestDTO.senha());
+        var auth = this.authenticationManager.authenticate(authToken);
+        var pessoa = (PessoaModel) auth.getPrincipal();
+        var token = tokenService.generateToken(pessoa);
+
+        return ResponseEntity.ok(new LoginResponseDTO(token, pessoa.getIdPessoa()));
+
+    } catch (BadCredentialsException e) {
+        throw new CredenciaisInvalidasException("E-mail ou senha inválidos.");
     }
+}
 
     @Operation(
         summary = "Registrar novo usuário",
@@ -74,6 +77,7 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "409", description = "E-mail já cadastrado"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
+    
     @PostMapping("/register")
     public ResponseEntity<PessoaResponseDTO> register(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO){
         if(this.pessoaRepository.findByEmail(pessoaRequestDTO.email()) != null){

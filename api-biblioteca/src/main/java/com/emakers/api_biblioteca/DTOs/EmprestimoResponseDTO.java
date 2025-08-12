@@ -19,7 +19,8 @@ public record EmprestimoResponseDTO(
     @Schema(description = "Data de início do empréstimo", example = "2025-07-27")
     LocalDate dataEmprestimo,
     @Schema(description = "Data de devolução do livro", example = "2025-08-10")
-    LocalDate dataDevolucao
+    LocalDate dataDevolucao,
+    String status
 
 ) {
     public EmprestimoResponseDTO(EmprestimoModel emprestimo){
@@ -30,7 +31,8 @@ public record EmprestimoResponseDTO(
         emprestimo.getPessoa().getNome(),
         emprestimo.getLivro().getNome(),
         emprestimo.getDataEmprestimo(),
-        emprestimo.getDataDevolucao()
+        emprestimo.getDataDevolucao(),
+        emprestimo.getStatus()
         );
     }
 }

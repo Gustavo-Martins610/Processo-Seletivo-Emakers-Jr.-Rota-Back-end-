@@ -28,7 +28,6 @@ class EmprestimoControllerTest {
     void setUp() {
         emprestimoService = Mockito.mock(EmprestimoService.class);
         emprestimoController = new EmprestimoController();
-        // injeta o mock no campo privado usando reflection (sem setters)
         try {
             var field = EmprestimoController.class.getDeclaredField("emprestimoService");
             field.setAccessible(true);
@@ -40,16 +39,8 @@ class EmprestimoControllerTest {
 
     @Test
     void testEmprestarLivro_Sucesso() {
-        EmprestimoRequestDTO req = new EmprestimoRequestDTO(
-            1L, 2L, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), null
-        );
-        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(
-            1L, 2L, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), null
-        );
+        EmprestimoRequestDTO req = new EmprestimoRequestDTO(1L, 2L, 3L,"Fulano", "Dom Casmurro",LocalDate.of(2025, 7, 27), null, "Ativo");
+        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(1L, 2L, 3L,"Fulano", "Dom Casmurro",LocalDate.of(2025, 7, 27), null, "Ativo");
 
         when(emprestimoService.emprestarLivro(any(EmprestimoRequestDTO.class))).thenReturn(resp);
 
@@ -63,10 +54,7 @@ class EmprestimoControllerTest {
     @Test
     void testEmprestarLivro_PessoaNotFound() {
         EmprestimoRequestDTO req = new EmprestimoRequestDTO(
-            1L, 99L, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), null
-        );
+            1L, 99L, 3L,"Fulano", "Dom Casmurro",LocalDate.of(2025, 7, 27), null,"ativo");
         when(emprestimoService.emprestarLivro(any(EmprestimoRequestDTO.class)))
                 .thenThrow(new PessoaNotFoundException("Pessoa não encontrada"));
 
@@ -77,27 +65,17 @@ class EmprestimoControllerTest {
 
     @Test
     void testEmprestarLivro_ValidationException() {
-        EmprestimoRequestDTO req = new EmprestimoRequestDTO(
-            1L, 2L, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), null
-        );
-        when(emprestimoService.emprestarLivro(any(EmprestimoRequestDTO.class)))
-                .thenThrow(new ValidationException("Regra de negócio"));
+        EmprestimoRequestDTO req = new EmprestimoRequestDTO(1L, 2L, 3L,"Fulano", "Dom Casmurro", LocalDate.of(2025, 7, 27), null,"Ativo");
+        when(emprestimoService.emprestarLivro(any(EmprestimoRequestDTO.class))).thenThrow(new ValidationException("Regra de negócio"));
 
-        assertThrows(ValidationException.class, () -> {
-            emprestimoController.emprestarLivro(req);
+        assertThrows(ValidationException.class, () -> { emprestimoController.emprestarLivro(req);
         });
     }
 
     @Test
     void testDevolverLivro_Sucesso() {
         Long idEmprestimo = 1L;
-        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(
-            idEmprestimo, 2L, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), LocalDate.of(2025, 8, 1)
-        );
+        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(idEmprestimo, 2L, 3L,"Fulano", "Dom Casmurro",LocalDate.of(2025, 7, 27), LocalDate.of(2025, 8, 1),"Ativo");
 
         when(emprestimoService.devolverLivro(idEmprestimo)).thenReturn(resp);
 
@@ -122,13 +100,8 @@ class EmprestimoControllerTest {
     @Test
     void testListarEmprestimosAtivosPorPessoa_Sucesso() {
         Long idPessoa = 2L;
-        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(
-            1L, idPessoa, 3L,
-            "Fulano", "Dom Casmurro",
-            LocalDate.of(2025, 7, 27), null
-        );
-        when(emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa))
-                .thenReturn(List.of(resp));
+        EmprestimoResponseDTO resp = new EmprestimoResponseDTO(1L, idPessoa, 3L,"Fulano", "Dom Casmurro",LocalDate.of(2025, 7, 27), null,"Ativo");
+        when(emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa)).thenReturn(List.of(resp));
 
         ResponseEntity<List<EmprestimoResponseDTO>> response = emprestimoController.listarEmprestimosAtivosPorPessoa(idPessoa);
 
@@ -140,11 +113,9 @@ class EmprestimoControllerTest {
     @Test
     void testListarEmprestimosAtivosPorPessoa_PessoaNotFound() {
         Long idPessoa = 999L;
-        when(emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa))
-                .thenThrow(new PessoaNotFoundException("Pessoa não encontrada"));
+        when(emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa)).thenThrow(new PessoaNotFoundException("Pessoa não encontrada"));
 
-        assertThrows(PessoaNotFoundException.class, () -> {
-            emprestimoController.listarEmprestimosAtivosPorPessoa(idPessoa);
+        assertThrows(PessoaNotFoundException.class, () -> {emprestimoController.listarEmprestimosAtivosPorPessoa(idPessoa);
         });
     }
 }

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
@@ -70,6 +71,7 @@ public class LivroController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida"),
         @ApiResponse(responseCode = "409", description = "Livro já cadastrado")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<LivroResponseDTO> salvarlivro(
             @Valid @RequestBody LivroRequestDTO livroRequestDTO) {
@@ -90,6 +92,7 @@ public class LivroController {
         @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
         @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/update/{idLivro}")
     public ResponseEntity<LivroResponseDTO> mudarnomelivro(
             @Parameter(description = "ID do livro", example = "1") @PathVariable Long idLivro,
@@ -112,6 +115,8 @@ public class LivroController {
         @ApiResponse(responseCode = "204", description = "Livro removido com sucesso"),
         @ApiResponse(responseCode = "404", description = "Livro não encontrado")
     })
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{idLivro}")
     public ResponseEntity<Void> deletarlivro(
             @Parameter(description = "ID do livro a ser removido") @PathVariable("idLivro") Long idLivro) {

@@ -37,7 +37,7 @@ public class PessoaModel implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPessoa;
-    @Column(length = 100, nullable = false) //define o tamanho e a restrição do campo
+    @Column(length = 100, nullable = false)
     private String nome;
     @Column(length = 20, nullable = false)
     private String cpf;
@@ -68,6 +68,7 @@ public class PessoaModel implements UserDetails{
 
     @Builder
     public PessoaModel(PessoaRequestDTO pessoaRequestDTO){
+        this.idPessoa = pessoaRequestDTO.idPessoa();
         this.nome = pessoaRequestDTO.nome();
         this.cpf = pessoaRequestDTO.cpf();
         this.cep = pessoaRequestDTO.cep();
@@ -88,7 +89,10 @@ public class PessoaModel implements UserDetails{
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    
+    public Long getIdPessoa(){
+        return idPessoa;
+    }
+
     @Override
     public String getUsername() {
         return email;

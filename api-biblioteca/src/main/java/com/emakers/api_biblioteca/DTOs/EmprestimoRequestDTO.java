@@ -18,6 +18,8 @@ public record EmprestimoRequestDTO(
     @Schema(description = "Data de início do empréstimo", example = "2025-07-27")
     LocalDate dataEmprestimo,
     @Schema(description = "Data de devolução do livro", example = "2025-08-10")
-    LocalDate dataDevolucao
+    LocalDate dataDevolucao,
+    String status
+    
 ) {
 }

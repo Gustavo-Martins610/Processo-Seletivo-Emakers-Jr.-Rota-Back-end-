@@ -58,7 +58,7 @@ class EmprestimoServiceImpTest {
         pessoa.setIdPessoa(idPessoa);
 
         EmprestimoRequestDTO requestDTO = new EmprestimoRequestDTO(idEmprestimo, idLivro, idPessoa,"Gustavo",
-        "Dom Casmurro",LocalDate.now(), LocalDate.now().plusDays(7));
+        "Dom Casmurro",LocalDate.now(), LocalDate.now().plusDays(7),"Ativo");
 
         when(livroRepository.findById(idLivro)).thenReturn(Optional.of(livro));
         when(pessoaRepository.findById(idPessoa)).thenReturn(Optional.of(pessoa));

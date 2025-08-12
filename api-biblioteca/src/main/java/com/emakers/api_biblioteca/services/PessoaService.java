@@ -14,6 +14,9 @@ import com.emakers.api_biblioteca.DTOs.PessoaUpdateDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
 import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -86,4 +89,10 @@ public class PessoaService {
 
         return "pessoa de ID" + idpessoa + "deletada";
     }
+
+    public PessoaResponseDTO buscarPorId(Long idPessoa) {
+    PessoaModel pessoa = pessoaRepository.findById(idPessoa).orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada"));
+
+    return new PessoaResponseDTO(pessoa);
+}
 }

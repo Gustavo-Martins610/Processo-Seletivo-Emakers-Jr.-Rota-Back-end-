@@ -70,8 +70,7 @@ class PessoaServiceTest {
 
     @Test
     void testSalvarpessoa() {
-        PessoaRequestDTO dto = new PessoaRequestDTO("Ana","123.456.789-10","37300-247","analuisa@gmail.com", "123456789", "980", "AP202", "Rua candeias", 
-        "São José", "Lavras", "MG");
+        PessoaRequestDTO dto = new PessoaRequestDTO(1L,"Ana","123.456.789-10","37300-247","analuisa@gmail.com", "123456789", "980", "AP202", "Rua candeias","São José", "Lavras", "MG");
         PessoaModel pessoa = new PessoaModel(dto);
         pessoa.setNome("Ana");
 

@@ -83,7 +83,7 @@ class PessoaControllerTest {
 
     @Test
     void testSalvarPessoa_Sucesso() {
-        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35501-248", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
+        PessoaRequestDTO req = new PessoaRequestDTO(1L,"Fulano", "12345678901", "35501-248", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         PessoaModel pessoaModel = new PessoaModel();
         pessoaModel.setNome("Fulano");
         pessoaModel.setEmail("fulano@email.com");
@@ -108,7 +108,7 @@ class PessoaControllerTest {
 
     @Test
     void testSalvarPessoa_EmailJaCadastrado() {
-        PessoaRequestDTO req = new PessoaRequestDTO("Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
+        PessoaRequestDTO req = new PessoaRequestDTO(1L,"Fulano", "12345678901", "35500-200", "novo@email.com", "123456789", "123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("novo@email.com")).thenReturn(new PessoaModel());
 
         assertThrows(ValidationException.class, () -> {

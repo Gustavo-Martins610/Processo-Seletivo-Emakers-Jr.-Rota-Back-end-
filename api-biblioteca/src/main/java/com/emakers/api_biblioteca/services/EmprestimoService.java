@@ -52,6 +52,7 @@ public class EmprestimoService {
     emprestimo.setLivro(livro);
     emprestimo.setDataEmprestimo(LocalDate.now());
     emprestimo.setDataDevolucao(null);
+    emprestimo.setStatus("Vigente");
 
 
     livro.setQuantidade(livro.getQuantidade() - 1);
@@ -71,6 +72,7 @@ public class EmprestimoService {
         }
 
         emprestimo.setDataDevolucao(LocalDate.now());
+        emprestimo.setStatus("Devolvido");
         emprestimoRepository.save(emprestimo);
 
         LivroModel livro = emprestimo.getLivro();
@@ -81,11 +83,15 @@ public class EmprestimoService {
     }
 
     public List<EmprestimoResponseDTO> listarEmprestimosAtivosPorPessoa(Long idPessoa) {
-    List<EmprestimoModel> emprestimos = emprestimoRepository
-        .findByPessoaIdPessoaAndDataDevolucaoIsNull(idPessoa);
+    List<EmprestimoModel> emprestimos = emprestimoRepository.findByPessoaIdPessoaAndDataDevolucaoIsNull(idPessoa);
 
-    return emprestimos.stream()
-        .map(EmprestimoResponseDTO::new)
-        .toList();
+    return emprestimos.stream().map(EmprestimoResponseDTO::new).toList();
 }
+
+    
+    public List<EmprestimoResponseDTO> listarEmprestimosDevolvidos(Long idpessoa, String status) {
+    List<EmprestimoModel> emprestimos = emprestimoRepository.findByPessoa_IdPessoaAndStatus(idpessoa,status);
+    return emprestimos.stream().map(EmprestimoResponseDTO::new).toList();
+}
+
 }

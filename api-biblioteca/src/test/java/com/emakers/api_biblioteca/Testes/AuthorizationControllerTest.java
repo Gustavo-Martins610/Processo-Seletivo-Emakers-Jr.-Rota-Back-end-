@@ -38,7 +38,6 @@ class AuthenticationControllerTest {
         viaCepService = mock(ViaCepService.class);
         controller = new AuthenticationController();
 
-        // Injeta dependências (reflexão porque os campos são package-private)
         try {
             var repoField = AuthenticationController.class.getDeclaredField("pessoaRepository");
             repoField.setAccessible(true);
@@ -62,11 +61,7 @@ class AuthenticationControllerTest {
 
     @Test
     void testLogin_Success() {
-        PessoaRequestDTO loginReq = new PessoaRequestDTO(
-            "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
-
-        // Mocks para autenticação e geração de token
+        PessoaRequestDTO loginReq = new PessoaRequestDTO(1L,"fulano", "12345678901", "35500-200", "fulano@email.com", "senha123","123", "AP202", "rua martins", "São José", "Lavras", "MG");
         Authentication auth = mock(Authentication.class);
         PessoaModel pessoa = new PessoaModel();
         pessoa.setEmail("fulano@email.com");
@@ -83,9 +78,7 @@ class AuthenticationControllerTest {
 
     @Test
     void testLogin_BadCredentials() {
-        PessoaRequestDTO loginReq = new PessoaRequestDTO(
-            "fulano", "12345678901", "35500-200", "fulano@email.com", "senhaerrada",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
+        PessoaRequestDTO loginReq = new PessoaRequestDTO(1L,"fulano", "12345678901", "35500-200", "fulano@email.com", "senhaerrada","123", "AP202", "rua martins", "São José", "Lavras", "MG");
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Bad credentials"));
@@ -97,15 +90,12 @@ class AuthenticationControllerTest {
 
     @Test
     void testRegister_Success() {
-        PessoaRequestDTO req = new PessoaRequestDTO(
-            "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
+        PessoaRequestDTO req = new PessoaRequestDTO(1L,"fulano", "12345678901", "35500-200", "fulano@email.com", "senha123","123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("fulano@email.com")).thenReturn(null);
         when(viaCepService.consultarCep("35500-200")).thenReturn(
             new ViaCepResponseDTO("35500-200","rua martins","São José","Lavras","MG")
         );
 
-        // Espera só um ResponseEntity.ok()
         ResponseEntity<PessoaResponseDTO> response = controller.register(req);
 
         assertEquals(200, response.getStatusCode().value());
@@ -114,9 +104,7 @@ class AuthenticationControllerTest {
 
     @Test
     void testRegister_EmailJaCadastrado() {
-        PessoaRequestDTO req = new PessoaRequestDTO(
-            "fulano", "12345678901", "35500-200", "fulano@email.com", "senha123",
-            "123", "AP202", "rua martins", "São José", "Lavras", "MG");
+        PessoaRequestDTO req = new PessoaRequestDTO(1L,"fulano", "12345678901", "35500-200", "fulano@email.com", "senha123","123", "AP202", "rua martins", "São José", "Lavras", "MG");
         when(pessoaRepository.findByEmail("fulano@email.com")).thenReturn(new PessoaModel());
 
         assertThrows(EmailJaCadastradoException.class, () -> {

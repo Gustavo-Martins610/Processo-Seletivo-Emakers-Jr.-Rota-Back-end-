@@ -32,5 +32,8 @@ public class EmprestimoModel {
     @Column(name = "data_devolucao")
     private LocalDate dataDevolucao;
 
+    @Column(name = "Status")
+    private String status;
+
 }
 
