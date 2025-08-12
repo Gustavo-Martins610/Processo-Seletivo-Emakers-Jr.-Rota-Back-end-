@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
+import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
 import com.emakers.api_biblioteca.models.LivroModel;
 import com.emakers.api_biblioteca.repositories.LivroRepository;
 
@@ -38,11 +39,11 @@ public class LivroService {
      *
      * @param idlivro ID do livro a ser buscado.
      * @return DTO contendo os dados do livro encontrado.
-     * @throws IllegalArgumentException se o ID não existir no banco de dados.
+     * @throws LivroNotFoundException se o ID não existir no banco de dados.
      */
     public LivroResponseDTO pegarlivroporid(Long idlivro) {
         LivroModel livro = livroRepository.findById(idlivro)
-            .orElseThrow(() -> new IllegalArgumentException("ID não encontrado"));
+            .orElseThrow(() -> new LivroNotFoundException("Livro não encontrado com ID: " + idlivro));
         return new LivroResponseDTO(livro);
     }
 
@@ -65,11 +66,11 @@ public class LivroService {
      * @param idlivro ID do livro a ser atualizado.
      * @param livroRequestDTO DTO com os dados a serem modificados.
      * @return DTO com os dados atualizados do livro.
-     * @throws IllegalArgumentException se o livro com o ID especificado não for encontrado.
+     * @throws LivroNotFoundException se o livro com o ID especificado não for encontrado.
      */
     public LivroResponseDTO atualizarlivro(Long idlivro, LivroRequestDTO livroRequestDTO) {
         LivroModel livro = livroRepository.findById(idlivro)
-            .orElseThrow(() -> new IllegalArgumentException("ID não encontrado"));
+            .orElseThrow(() -> new LivroNotFoundException("Livro não encontrado com ID: " + idlivro));
 
         if (livroRequestDTO.nome() != null && !livroRequestDTO.nome().isBlank()) {
             livro.setNome(livroRequestDTO.nome());
@@ -93,11 +94,11 @@ public class LivroService {
      *
      * @param idlivro ID do livro a ser removido.
      * @return Mensagem de confirmação indicando o ID removido.
-     * @throws IllegalArgumentException se o livro com o ID especificado não for encontrado.
+     * @throws LivroNotFoundException se o livro com o ID especificado não for encontrado.
      */
     public String deletarlivro(Long idlivro) {
         LivroModel livro = livroRepository.findById(idlivro)
-            .orElseThrow(() -> new IllegalArgumentException("ID não encontrado"));
+            .orElseThrow(() -> new LivroNotFoundException("Livro não encontrado com ID: " + idlivro));
         livroRepository.delete(livro);
         return "Livro de ID " + idlivro + " deletado";
     }
