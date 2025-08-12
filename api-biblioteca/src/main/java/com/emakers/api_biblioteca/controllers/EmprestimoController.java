@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.EmprestimoRequestDTO;
@@ -12,6 +13,7 @@ import com.emakers.api_biblioteca.DTOs.EmprestimoResponseDTO;
 import com.emakers.api_biblioteca.exceptions.EmprestimoNotFoundException;
 import com.emakers.api_biblioteca.exceptions.PessoaNotFoundException;
 import com.emakers.api_biblioteca.exceptions.ValidationException;
+import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.services.EmprestimoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,7 +87,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
-    @PreAuthorize("hasRole('ADMIN')") //fazer me
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pessoa/{idPessoa}/ativos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(@Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
         try {
@@ -96,8 +98,19 @@ public class EmprestimoController {
         }
     }
 
+    @GetMapping("/pessoa/me/ativos")
+    public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosAtivos(@AuthenticationPrincipal PessoaModel principal) {
+        
+        try {
+            List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosAtivosPorPessoa(principal.getIdPessoa());
+            return ResponseEntity.ok(response);
+        } catch (PessoaNotFoundException ex) {
+            throw ex;
+        }
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/pessoa/{idPessoa}/listar")
+    @GetMapping("/pessoa/{idPessoa}/listardevolvidos")
     public ResponseEntity<List<EmprestimoResponseDTO>> ListarEmprestimosDevolvidos(@PathVariable Long idPessoa) {
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosDevolvidos(idPessoa, "Devolvido");
@@ -107,4 +120,14 @@ public class EmprestimoController {
         }
     }
     
+    @GetMapping("/pessoa/me/devolvidos")
+    public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosDevolvidos(@AuthenticationPrincipal PessoaModel principal) {
+        
+        try {
+            List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosDevolvidos(principal.getIdPessoa(),"Devolvido");
+            return ResponseEntity.ok(response);
+        } catch (PessoaNotFoundException ex) {
+            throw ex;
+        }
+    }
 }
