@@ -48,13 +48,13 @@ public class PessoaController {
     private PasswordEncoder passwordEncoder;
 
     public void setPessoaService(PessoaService pessoaService) {
-    this.pessoaService = pessoaService;
+        this.pessoaService = pessoaService;
     }
     public void setViaCepService(ViaCepService viaCepService) {
-    this.viaCepService = viaCepService;
+        this.viaCepService = viaCepService;
     }
     public void setPessoaRepository(PessoaRepository pessoaRepository) {
-    this.pessoaRepository = pessoaRepository;
+        this.pessoaRepository = pessoaRepository;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -84,13 +84,19 @@ public class PessoaController {
         }
     }
 
+    @Operation(summary = "Buscar os próprios dados do usuário logado")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Dados do usuário logado"),
+        @ApiResponse(responseCode = "401", description = "Usuário não autenticado")
+    })
     @GetMapping("/me/meusdados")
     public ResponseEntity<PessoaResponseDTO> eu(@AuthenticationPrincipal PessoaModel principal) {
-    if (principal == null) {
-        return ResponseEntity.status(401).build();}
-    var dto = pessoaService.buscarPorId(principal.getIdPessoa());
-    return ResponseEntity.ok(dto);
-}
+        if (principal == null) {
+            return ResponseEntity.status(401).build();
+        }
+        var dto = pessoaService.buscarPorId(principal.getIdPessoa());
+        return ResponseEntity.ok(dto);
+    }
 
     @Operation(summary = "Criar uma nova pessoa")
     @ApiResponses({
@@ -129,7 +135,7 @@ public class PessoaController {
         }
     }
 
-    @Operation(summary = "Atualizar uma pessoa")
+    @Operation(summary = "Atualizar uma pessoa pelo ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Pessoa atualizada"),
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
@@ -144,21 +150,23 @@ public class PessoaController {
         try {
             PessoaResponseDTO response = pessoaService.atualizarpessoa(idpessoa, pessoaupdateDTO);
             return ResponseEntity.ok(response);
-        } catch (PessoaNotFoundException ex) {
-            throw ex;
-        } catch (ValidationException ex) {
+        } catch (PessoaNotFoundException | ValidationException ex) {
             throw ex;
         }
     }
 
+    @Operation(summary = "Atualizar os próprios dados")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Pessoa atualizada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
+        @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PatchMapping("/update/me")
     public ResponseEntity<PessoaResponseDTO> atualizarMeusDados(@AuthenticationPrincipal PessoaModel principal, @Valid @RequestBody PessoaUpdateDTO pessoaupdateDTO) {
         try {
             PessoaResponseDTO response = pessoaService.atualizarpessoa(principal.getIdPessoa(), pessoaupdateDTO);
             return ResponseEntity.ok(response);
-        } catch (PessoaNotFoundException ex) {
-            throw ex;
-        } catch (ValidationException ex) {
+        } catch (PessoaNotFoundException | ValidationException ex) {
             throw ex;
         }
     }
@@ -169,7 +177,6 @@ public class PessoaController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
-
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{idPessoa}")
     public ResponseEntity<Void> deletarpessoa(

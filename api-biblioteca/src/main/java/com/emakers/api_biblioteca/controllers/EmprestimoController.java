@@ -23,8 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-
-@Tag(name = "Emprestimos", description = "Operações relacionadas ao emprestimo de livros da biblioteca")
+@Tag(name = "Empréstimos", description = "Operações relacionadas ao empréstimo de livros da biblioteca")
 @RestController
 @RequestMapping("/emprestimo")
 public class EmprestimoController {
@@ -42,7 +41,6 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa ou livro não encontrado"),
         @ApiResponse(responseCode = "409", description = "Recurso em conflito (ex: já emprestado)")
     })
-    
     @PostMapping("/criar")
     public ResponseEntity<EmprestimoResponseDTO> emprestarLivro(
             @Parameter(description = "Dados do empréstimo") @Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
@@ -64,7 +62,6 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "200", description = "Devolução registrada com sucesso"),
         @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
-
     @PostMapping("/devolver/{idEmprestimo}")
     public ResponseEntity<EmprestimoResponseDTO> devolverLivro(
             @Parameter(description = "ID do empréstimo", example = "1") @PathVariable Long idEmprestimo) {
@@ -79,7 +76,7 @@ public class EmprestimoController {
     }
 
     @Operation(
-        summary = "Listar empréstimos ativos por pessoa",
+        summary = "Listar empréstimos ativos por pessoa (admin)",
         description = "Retorna uma lista de empréstimos ativos para uma determinada pessoa."
     )
     @ApiResponses({
@@ -89,7 +86,8 @@ public class EmprestimoController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pessoa/{idPessoa}/ativos")
-    public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(@Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
+    public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(
+            @Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosAtivosPorPessoa(idPessoa);
             return ResponseEntity.ok(response);
@@ -98,9 +96,16 @@ public class EmprestimoController {
         }
     }
 
+    @Operation(
+        summary = "Listar meus empréstimos ativos",
+        description = "Retorna uma lista de empréstimos ativos para o usuário autenticado."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de empréstimos ativos retornada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     @GetMapping("/pessoa/me/ativos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosAtivos(@AuthenticationPrincipal PessoaModel principal) {
-        
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosAtivosPorPessoa(principal.getIdPessoa());
             return ResponseEntity.ok(response);
@@ -109,9 +114,19 @@ public class EmprestimoController {
         }
     }
 
+    @Operation(
+        summary = "Listar empréstimos devolvidos por pessoa (admin)",
+        description = "Retorna uma lista de empréstimos devolvidos para uma pessoa específica. Acesso restrito a administradores."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de empréstimos devolvidos retornada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
+        @ApiResponse(responseCode = "403", description = "Acesso negado")
+    })
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pessoa/{idPessoa}/listardevolvidos")
-    public ResponseEntity<List<EmprestimoResponseDTO>> ListarEmprestimosDevolvidos(@PathVariable Long idPessoa) {
+    public ResponseEntity<List<EmprestimoResponseDTO>> ListarEmprestimosDevolvidos(
+            @Parameter(description = "ID da pessoa", example = "1") @PathVariable Long idPessoa) {
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosDevolvidos(idPessoa, "Devolvido");
             return ResponseEntity.ok(response);
@@ -119,10 +134,17 @@ public class EmprestimoController {
             throw ex;
         }
     }
-    
+
+    @Operation(
+        summary = "Listar meus empréstimos devolvidos",
+        description = "Retorna uma lista de empréstimos devolvidos pelo usuário autenticado."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de empréstimos devolvidos retornada com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     @GetMapping("/pessoa/me/devolvidos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosDevolvidos(@AuthenticationPrincipal PessoaModel principal) {
-        
         try {
             List<EmprestimoResponseDTO> response = emprestimoService.listarEmprestimosDevolvidos(principal.getIdPessoa(),"Devolvido");
             return ResponseEntity.ok(response);
@@ -130,4 +152,4 @@ public class EmprestimoController {
             throw ex;
         }
     }
-}
+} 

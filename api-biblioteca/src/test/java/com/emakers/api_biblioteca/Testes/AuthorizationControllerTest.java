@@ -3,7 +3,7 @@ package com.emakers.api_biblioteca.Testes;
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
-import com.emakers.api_biblioteca.Users.LoginResponseDTO;
+import com.emakers.api_biblioteca.DTOs.LoginResponseDTO;
 import com.emakers.api_biblioteca.controllers.AuthenticationController;
 import com.emakers.api_biblioteca.exceptions.CredenciaisInvalidasException;
 import com.emakers.api_biblioteca.exceptions.EmailJaCadastradoException;
