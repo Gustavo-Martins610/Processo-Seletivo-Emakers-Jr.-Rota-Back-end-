@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
-import com.emakers.api_biblioteca.Users.UserRole;
+import com.emakers.api_biblioteca.Enums.UserRole;
 import com.emakers.api_biblioteca.exceptions.CredenciaisInvalidasException;
 import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;

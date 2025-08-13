@@ -6,9 +6,12 @@ import java.time.LocalDate;
 
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,6 +46,9 @@ public class LivroModel{
     private Integer quantidade;
     @Column (length = 10, nullable = false)
     private String status;
+    @Enumerated(EnumType.STRING)
+    @Column (length = 40, nullable = false)
+    private LivroCategoria categoria;
 
 
     @Builder
@@ -52,6 +58,7 @@ public class LivroModel{
         this.data_lancamento = livroRequestDTO.data_lancamento();
         this.quantidade = livroRequestDTO.quantidade();
         this.status = livroRequestDTO.status();
+        this.categoria = livroRequestDTO.categoria();
     }
 
 

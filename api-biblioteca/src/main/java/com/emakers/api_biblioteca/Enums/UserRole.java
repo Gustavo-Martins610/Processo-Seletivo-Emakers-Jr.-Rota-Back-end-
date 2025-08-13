@@ -1,4 +1,4 @@
-package com.emakers.api_biblioteca.Users;
+package com.emakers.api_biblioteca.Enums;
 
 public enum UserRole {
     ADMIN("admin"),

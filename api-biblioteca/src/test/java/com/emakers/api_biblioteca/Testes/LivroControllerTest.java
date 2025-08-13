@@ -2,6 +2,7 @@ package com.emakers.api_biblioteca.Testes;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 import com.emakers.api_biblioteca.controllers.LivroController;
 import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
 import com.emakers.api_biblioteca.services.LivroService;
@@ -39,8 +40,8 @@ class LivroControllerUnitTest {
 
     @Test
     void testPegarTodosLivros() {
-        LivroResponseDTO livro1 = new LivroResponseDTO(1L, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível");
-        LivroResponseDTO livro2 = new LivroResponseDTO(2L, "Memórias Póstumas", "Machado de Assis", LocalDate.of(1881, 1, 1), 8,"Disponível");
+        LivroResponseDTO livro1 = new LivroResponseDTO(1L, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível", LivroCategoria.Ação);
+        LivroResponseDTO livro2 = new LivroResponseDTO(2L, "Memórias Póstumas", "Machado de Assis", LocalDate.of(1881, 1, 1), 8,"Disponível", LivroCategoria.Ação);
         Mockito.when(livroService.pegartodoslivros()).thenReturn(Arrays.asList(livro1, livro2));
 
         ResponseEntity<List<LivroResponseDTO>> resp = livroController.pegartodoslivros();
@@ -52,7 +53,7 @@ class LivroControllerUnitTest {
     @Test
     void testPegarlivroporid_Sucesso() {
         Long idLivro = 1L;
-        LivroResponseDTO livro = new LivroResponseDTO(idLivro, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível");
+        LivroResponseDTO livro = new LivroResponseDTO(idLivro, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível", LivroCategoria.Ação);
 
         Mockito.when(livroService.pegarlivroporid(idLivro)).thenReturn(livro);
 
@@ -71,8 +72,8 @@ class LivroControllerUnitTest {
 
     @Test
     void testSalvarLivro() {
-        LivroRequestDTO request = new LivroRequestDTO("Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível");
-        LivroResponseDTO response = new LivroResponseDTO(1L, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível");
+        LivroRequestDTO request = new LivroRequestDTO("Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível", LivroCategoria.Ação);
+        LivroResponseDTO response = new LivroResponseDTO(1L, "Dom Casmurro", "Machado de Assis", LocalDate.of(1899, 2, 1), 10,"Disponível", LivroCategoria.Ação);
 
         Mockito.when(livroService.salvarlivro(any(LivroRequestDTO.class))).thenReturn(response);
 
@@ -85,8 +86,8 @@ class LivroControllerUnitTest {
     @Test
     void testMudarnomelivro_Sucesso() {
         Long idLivro = 1L;
-        LivroRequestDTO request = new LivroRequestDTO("Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15,"Disponível");
-        LivroResponseDTO response = new LivroResponseDTO(idLivro, "Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15,"Disponível");
+        LivroRequestDTO request = new LivroRequestDTO("Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15,"Disponível", LivroCategoria.Ação);
+        LivroResponseDTO response = new LivroResponseDTO(idLivro, "Novo Nome", "Machado de Assis", LocalDate.of(1899, 2, 1), 15,"Disponível", LivroCategoria.Ação);
 
         Mockito.when(livroService.atualizarlivro(eq(idLivro), any(LivroRequestDTO.class))).thenReturn(response);
 
@@ -99,7 +100,7 @@ class LivroControllerUnitTest {
     @Test
     void testMudarnomelivro_NotFound() {
         Long idLivro = 999L;
-        LivroRequestDTO request = new LivroRequestDTO("Qualquer", "Machado de Assis", LocalDate.of(1899, 2, 1), 1,"Disponível");
+        LivroRequestDTO request = new LivroRequestDTO("Qualquer", "Machado de Assis", LocalDate.of(1899, 2, 1), 1,"Disponível", LivroCategoria.Ação);
 
         Mockito.when(livroService.atualizarlivro(eq(idLivro), any(LivroRequestDTO.class))).thenThrow(new LivroNotFoundException("Livro não encontrado"));
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
 import com.emakers.api_biblioteca.exceptions.ValidationException;
 import com.emakers.api_biblioteca.services.LivroService;
@@ -41,6 +42,18 @@ public class LivroController {
     @GetMapping("/all")
     public ResponseEntity<List<LivroResponseDTO>> pegartodoslivros() {
         return ResponseEntity.ok(livroService.pegartodoslivros());
+    }
+
+    @Operation(
+        summary = "Listar livros por categoria",
+        description = "Retorna uma lista de todos os livros da categoria escolhida."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de livros retornada com sucesso", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
+    })
+    @GetMapping("/all/{categoria}")
+    public ResponseEntity<List<LivroResponseDTO>> pegarlivrosporcategoria(@Parameter(description = "Categoria escolhida") @PathVariable("categoria") LivroCategoria categoria) {
+        return ResponseEntity.ok(livroService.pegarlivroporcategoria(categoria));
     }
 
     @Operation(

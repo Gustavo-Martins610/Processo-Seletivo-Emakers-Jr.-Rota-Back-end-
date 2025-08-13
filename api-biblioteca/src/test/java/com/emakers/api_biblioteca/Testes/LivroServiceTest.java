@@ -2,6 +2,7 @@ package com.emakers.api_biblioteca.Testes;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
 import com.emakers.api_biblioteca.models.LivroModel;
 import com.emakers.api_biblioteca.repositories.LivroRepository;
@@ -67,7 +68,7 @@ class LivroServiceTest {
 
     @Test
     void deveSalvarLivroCorretamente() {
-        LivroRequestDTO dto = new LivroRequestDTO("Livro Novo", "Autor", LocalDate.of(2020, 1, 1), 5,"Disponível");
+        LivroRequestDTO dto = new LivroRequestDTO("Livro Novo", "Autor", LocalDate.of(2020, 1, 1), 5,"Disponível",LivroCategoria.Ação);
 
         LivroModel livroSalvo = new LivroModel(dto);
         livroSalvo.setIdLivro(10L);
@@ -86,7 +87,7 @@ class LivroServiceTest {
         livro.setIdLivro(2L);
         livro.setNome("Antigo");
 
-        LivroRequestDTO dto = new LivroRequestDTO("Novo Nome", "Autor", LocalDate.now(), 2,"Disponível");
+        LivroRequestDTO dto = new LivroRequestDTO("Novo Nome", "Autor", LocalDate.now(), 2,"Disponível",LivroCategoria.Ação);
 
         when(livroRepository.findById(2L)).thenReturn(Optional.of(livro));
         when(livroRepository.save(any(LivroModel.class))).thenReturn(livro);
@@ -98,7 +99,7 @@ class LivroServiceTest {
 
     @Test
     void deveLancarExcecaoAoAtualizarLivroInexistente() {
-        LivroRequestDTO dto = new LivroRequestDTO("Nome", "Autor", LocalDate.now(), 1,"Disponível");
+        LivroRequestDTO dto = new LivroRequestDTO("Nome", "Autor", LocalDate.now(), 1,"Disponível",LivroCategoria.Ação);
         when(livroRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(LivroNotFoundException.class, () -> livroService.atualizarlivro(99L, dto));

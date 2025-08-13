@@ -1,8 +1,9 @@
 package com.emakers.api_biblioteca.DTOs;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import com.emakers.api_biblioteca.Enums.UserRole;
 import com.emakers.api_biblioteca.models.PessoaModel;
-import com.emakers.api_biblioteca.Users.UserRole;
 
 import lombok.Builder;
 

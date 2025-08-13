@@ -21,7 +21,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
-import com.emakers.api_biblioteca.Users.UserRole;
+import com.emakers.api_biblioteca.Enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity

@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS Livro(
     autor VARCHAR(100) NOT NULL,
     data_lancamento DATE,
     quantidade INTEGER NOT NULL DEFAULT 1,
-    status VARCHAR(10) NOT NULL DEFAULT 'Disponível'
+    status VARCHAR(10) NOT NULL DEFAULT 'Disponível',
+    categoria VARCHAR(50)
 );

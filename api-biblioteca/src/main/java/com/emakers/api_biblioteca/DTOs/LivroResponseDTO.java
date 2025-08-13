@@ -2,7 +2,7 @@ package com.emakers.api_biblioteca.DTOs;
 
 import java.time.LocalDate;
 
-
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 import com.emakers.api_biblioteca.models.LivroModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -22,7 +22,9 @@ public record LivroResponseDTO(
     @Schema(description = "Quantidade do Livro na Biblioteca", example = "10")
     Integer quantidade,
     @Schema(description = "Status que o livro se encontra", example = "Disponível")
-    String status
+    String status,
+    @Schema(description = "Categoria do livro", example = "Terror")
+    LivroCategoria categoria
 
 ) {
     @Builder
@@ -33,7 +35,8 @@ public record LivroResponseDTO(
         livro.getAutor(),
         livro.getData_lancamento(),
         livro.getQuantidade(),
-        livro.getStatus()
+        livro.getStatus(),
+        livro.getCategoria()
         );
     }
 }

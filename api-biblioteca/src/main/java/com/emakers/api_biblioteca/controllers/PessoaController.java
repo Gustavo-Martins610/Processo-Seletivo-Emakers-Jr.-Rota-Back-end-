@@ -20,7 +20,7 @@ import com.emakers.api_biblioteca.DTOs.PessoaRequestDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaResponseDTO;
 import com.emakers.api_biblioteca.DTOs.PessoaUpdateDTO;
 import com.emakers.api_biblioteca.DTOs.ViaCepResponseDTO;
-import com.emakers.api_biblioteca.Users.UserRole;
+import com.emakers.api_biblioteca.Enums.UserRole;
 import com.emakers.api_biblioteca.exceptions.PessoaNotFoundException;
 import com.emakers.api_biblioteca.exceptions.ValidationException;
 import com.emakers.api_biblioteca.models.PessoaModel;

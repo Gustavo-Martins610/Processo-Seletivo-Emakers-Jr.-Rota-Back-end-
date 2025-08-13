@@ -1,11 +1,11 @@
 package com.emakers.api_biblioteca.Testes;
 
 import com.emakers.api_biblioteca.DTOs.*;
+import com.emakers.api_biblioteca.Enums.UserRole;
 import com.emakers.api_biblioteca.controllers.PessoaController;
 import com.emakers.api_biblioteca.exceptions.PessoaNotFoundException;
 import com.emakers.api_biblioteca.exceptions.ValidationException;
 import com.emakers.api_biblioteca.models.PessoaModel;
-import com.emakers.api_biblioteca.Users.UserRole;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 import com.emakers.api_biblioteca.services.PessoaService;
 import com.emakers.api_biblioteca.services.ViaCepService;

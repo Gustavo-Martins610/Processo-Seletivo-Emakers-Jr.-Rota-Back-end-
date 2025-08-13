@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.emakers.api_biblioteca.DTOs.LivroRequestDTO;
 import com.emakers.api_biblioteca.DTOs.LivroResponseDTO;
+import com.emakers.api_biblioteca.Enums.LivroCategoria;
 import com.emakers.api_biblioteca.exceptions.LivroNotFoundException;
 import com.emakers.api_biblioteca.models.LivroModel;
 import com.emakers.api_biblioteca.repositories.LivroRepository;
@@ -101,5 +102,10 @@ public class LivroService {
             .orElseThrow(() -> new LivroNotFoundException("Livro não encontrado com ID: " + idlivro));
         livroRepository.delete(livro);
         return "Livro de ID " + idlivro + " deletado";
+    }
+
+    public List<LivroResponseDTO> pegarlivroporcategoria(LivroCategoria categoria) {
+        List<LivroModel> livros = livroRepository.findAllByCategoria(categoria);
+        return livros.stream().map(LivroResponseDTO::new).collect(Collectors.toList());
     }
 }
