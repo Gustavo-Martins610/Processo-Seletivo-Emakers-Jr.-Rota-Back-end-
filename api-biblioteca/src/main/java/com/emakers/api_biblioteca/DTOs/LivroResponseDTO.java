@@ -20,7 +20,9 @@ public record LivroResponseDTO(
     @Schema(description = "Data de lançamento do livro no formato AAAA-MM-DD.", example = "1899-02-01")
     LocalDate data_lancamento,
     @Schema(description = "Quantidade do Livro na Biblioteca", example = "10")
-    Integer quantidade
+    Integer quantidade,
+    @Schema(description = "Status que o livro se encontra", example = "Disponível")
+    String status
 
 ) {
     @Builder
@@ -30,7 +32,8 @@ public record LivroResponseDTO(
         livro.getNome(),
         livro.getAutor(),
         livro.getData_lancamento(),
-        livro.getQuantidade()
+        livro.getQuantidade(),
+        livro.getStatus()
         );
     }
 }

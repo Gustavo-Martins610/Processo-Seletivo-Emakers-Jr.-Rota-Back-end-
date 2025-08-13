@@ -67,6 +67,9 @@ public class EmprestimoService {
         emprestimo.setStatus("Vigente");
 
         livro.setQuantidade(livro.getQuantidade() - 1);
+        if (livro.getQuantidade() == 0){
+        livro.setStatus("Indisponível");
+        }
         livroRepository.save(livro);
 
         emprestimoRepository.save(emprestimo);
@@ -96,6 +99,9 @@ public class EmprestimoService {
 
         LivroModel livro = emprestimo.getLivro();
         livro.setQuantidade(livro.getQuantidade() + 1);
+        if (livro.getQuantidade() > 0){
+        livro.setStatus("Disponível");
+        }
         livroRepository.save(livro);
 
         return new EmprestimoResponseDTO(emprestimo);

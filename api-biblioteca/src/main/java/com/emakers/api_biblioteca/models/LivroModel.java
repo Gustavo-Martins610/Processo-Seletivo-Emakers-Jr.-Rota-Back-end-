@@ -41,6 +41,8 @@ public class LivroModel{
     private LocalDate data_lancamento;
     @Column(nullable = false)
     private Integer quantidade;
+    @Column (length = 10, nullable = false)
+    private String status;
 
 
     @Builder
@@ -49,6 +51,7 @@ public class LivroModel{
         this.autor = livroRequestDTO.autor();
         this.data_lancamento = livroRequestDTO.data_lancamento();
         this.quantidade = livroRequestDTO.quantidade();
+        this.status = livroRequestDTO.status();
     }
 
 

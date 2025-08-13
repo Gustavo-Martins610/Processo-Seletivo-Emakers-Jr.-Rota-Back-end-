@@ -12,6 +12,8 @@ public record LivroRequestDTO(
     @Schema(description = "Data de lançamento do livro no formato AAAA-MM-DD.", example = "1899-02-01")
     LocalDate data_lancamento,
     @Schema(description = "Quantidade do Livro na Biblioteca", example = "10")
-    Integer quantidade
+    Integer quantidade,
+    @Schema(description = "Status que o livro se encontra", example = "Disponível")
+    String status
 ) {
 }
