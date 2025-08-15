@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
+import com.emakers.api_biblioteca.services.AuthorizationService;
 import com.emakers.api_biblioteca.services.TokenService;
 
 import jakarta.servlet.FilterChain;
@@ -25,7 +26,8 @@ public class SecurityFilter extends OncePerRequestFilter{
     TokenService tokenService;
     @Autowired
     PessoaRepository pessoaRepository;
-
+    @Autowired
+    AuthorizationService authorizationService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -36,7 +38,7 @@ public class SecurityFilter extends OncePerRequestFilter{
         var token = this.recoverToken(request);
         if(token != null){
             var email = tokenService.validateToken(token);
-            UserDetails pessoa = pessoaRepository.findByEmail(email);
+            UserDetails pessoa = authorizationService.loadUserByUsername(email);
 
             var authentication = new UsernamePasswordAuthenticationToken(pessoa, null, pessoa.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

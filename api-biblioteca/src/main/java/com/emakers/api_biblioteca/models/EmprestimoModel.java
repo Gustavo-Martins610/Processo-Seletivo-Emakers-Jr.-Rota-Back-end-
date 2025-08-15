@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Emprestimo")
+
 public class EmprestimoModel {
 
     @Id

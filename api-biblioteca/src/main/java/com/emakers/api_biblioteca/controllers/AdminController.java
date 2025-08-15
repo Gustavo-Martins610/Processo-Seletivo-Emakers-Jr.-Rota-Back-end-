@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+
 @RestController
 @RequestMapping("/admin/users")
 public class AdminController {
@@ -37,6 +38,8 @@ public class AdminController {
         @ApiResponse(responseCode = "403", description = "Acesso negado. Somente administradores podem executar esta ação."),
         @ApiResponse(responseCode = "404", description = "Usuário com o ID especificado não foi encontrado")
     })
+
+    
     public ResponseEntity<PessoaResponseDTO> tornarAdmin(@Parameter(description = "ID do usuário que será promovido", example = "5")@PathVariable Long id) {
 
         PessoaModel pessoa = pessoaRepository.findById(id).orElseThrow(() -> new CredenciaisInvalidasException("ID não encontrado"));
@@ -47,4 +50,5 @@ public class AdminController {
         PessoaResponseDTO resposta = new PessoaResponseDTO(pessoa);
         return ResponseEntity.ok(resposta);
     }
+
 }

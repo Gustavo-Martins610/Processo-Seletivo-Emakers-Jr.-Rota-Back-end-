@@ -1,3 +1,2 @@
-INSERT INTO pessoa (nome, cpf, cep, email, senha, role)
-VALUES ('Administrador','123.456.789-10','12345-278','gustavo981233@gmail.com', '$2b$12$0Yf7T9ZdN4cmgjLZcidD.eGgkti3QNjGdIN2fRHiTy4OoiDO5B636 ', 'ADMIN')
-ON CONFLICT (email) DO NOTHING;
+INSERT INTO pessoa (nome, email, senha, cpf, cep,role)
+VALUES ('Administrador', 'gustavo981223@gmail.com', '$2a$10$H6kMpMV8S.p0AgDd5xakRONCmBHLw2n21fVh38K2omuldhT6RGX1C', '11122233344', '37500-000', 'ADMIN');

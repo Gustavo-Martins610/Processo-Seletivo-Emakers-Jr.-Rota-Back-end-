@@ -41,6 +41,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa ou livro não encontrado"),
         @ApiResponse(responseCode = "409", description = "Recurso em conflito (ex: já emprestado)")
     })
+
     @PostMapping("/criar")
     public ResponseEntity<EmprestimoResponseDTO> emprestarLivro(
             @Parameter(description = "Dados do empréstimo") @Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
@@ -62,6 +63,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "200", description = "Devolução registrada com sucesso"),
         @ApiResponse(responseCode = "404", description = "Empréstimo não encontrado")
     })
+
     @PostMapping("/devolver/{idEmprestimo}")
     public ResponseEntity<EmprestimoResponseDTO> devolverLivro(
             @Parameter(description = "ID do empréstimo", example = "1") @PathVariable Long idEmprestimo) {
@@ -84,6 +86,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pessoa/{idPessoa}/ativos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarEmprestimosAtivosPorPessoa(
@@ -104,6 +107,8 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "200", description = "Lista de empréstimos ativos retornada com sucesso"),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
+
+    
     @GetMapping("/pessoa/me/ativos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosAtivos(@AuthenticationPrincipal PessoaModel principal) {
         try {
@@ -123,6 +128,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Acesso negado")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pessoa/{idPessoa}/listardevolvidos")
     public ResponseEntity<List<EmprestimoResponseDTO>> ListarEmprestimosDevolvidos(
@@ -143,6 +149,7 @@ public class EmprestimoController {
         @ApiResponse(responseCode = "200", description = "Lista de empréstimos devolvidos retornada com sucesso"),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
+
     @GetMapping("/pessoa/me/devolvidos")
     public ResponseEntity<List<EmprestimoResponseDTO>> listarMeusEmprestimosDevolvidos(@AuthenticationPrincipal PessoaModel principal) {
         try {

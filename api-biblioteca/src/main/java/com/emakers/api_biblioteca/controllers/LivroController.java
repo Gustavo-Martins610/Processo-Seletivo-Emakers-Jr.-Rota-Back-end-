@@ -39,6 +39,7 @@ public class LivroController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de livros retornada com sucesso", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
     })
+
     @GetMapping("/all")
     public ResponseEntity<List<LivroResponseDTO>> pegartodoslivros() {
         return ResponseEntity.ok(livroService.pegartodoslivros());
@@ -51,8 +52,10 @@ public class LivroController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de livros retornada com sucesso", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
     })
+
     @GetMapping("/all/{categoria}")
-    public ResponseEntity<List<LivroResponseDTO>> pegarlivrosporcategoria(@Parameter(description = "Categoria escolhida") @PathVariable("categoria") LivroCategoria categoria) {
+    public ResponseEntity<List<LivroResponseDTO>> pegarlivrosporcategoria(@Parameter(description = "Categoria escolhida")
+    @PathVariable("categoria") LivroCategoria categoria) {
         return ResponseEntity.ok(livroService.pegarlivroporcategoria(categoria));
     }
 
@@ -64,6 +67,7 @@ public class LivroController {
         @ApiResponse(responseCode = "200", description = "Livro encontrado", content = @Content(schema = @Schema(implementation = LivroResponseDTO.class))),
         @ApiResponse(responseCode = "404", description = "Livro não encontrado")  
     })
+
     @GetMapping("/{idLivro}")
     public ResponseEntity<LivroResponseDTO> pegarlivroporid(
             @Parameter(description = "ID do livro") @PathVariable("idLivro") Long idlivro) {
@@ -84,6 +88,7 @@ public class LivroController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida"),
         @ApiResponse(responseCode = "409", description = "Livro já cadastrado")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<LivroResponseDTO> salvarlivro(
@@ -105,6 +110,7 @@ public class LivroController {
         @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
         @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/update/{idLivro}")
     public ResponseEntity<LivroResponseDTO> mudarnomelivro(

@@ -57,10 +57,12 @@ public class PessoaController {
         this.pessoaRepository = pessoaRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    
     @Operation(summary = "Listar todas as pessoas")
     @ApiResponse(responseCode = "200", description = "Lista de pessoas")
     @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<PessoaResponseDTO>> pegartodaspessoas() {
         return ResponseEntity.ok(pessoaService.pegartodaspessoas());
@@ -72,6 +74,7 @@ public class PessoaController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{idPessoa}")
     public ResponseEntity<PessoaResponseDTO> pegarpessoaporid(
@@ -89,6 +92,7 @@ public class PessoaController {
         @ApiResponse(responseCode = "200", description = "Dados do usuário logado"),
         @ApiResponse(responseCode = "401", description = "Usuário não autenticado")
     })
+
     @GetMapping("/me/meusdados")
     public ResponseEntity<PessoaResponseDTO> eu(@AuthenticationPrincipal PessoaModel principal) {
         if (principal == null) {
@@ -105,6 +109,7 @@ public class PessoaController {
         @ApiResponse(responseCode = "409", description = "Email já cadastrado"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<PessoaResponseDTO> salvarpessoa(
@@ -142,6 +147,8 @@ public class PessoaController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/update/{idPessoa}")
     public ResponseEntity<PessoaResponseDTO> atualizarpessoa(
@@ -161,8 +168,11 @@ public class PessoaController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "400", description = "Requisição inválida")
     })
+
+
     @PatchMapping("/update/me")
-    public ResponseEntity<PessoaResponseDTO> atualizarMeusDados(@AuthenticationPrincipal PessoaModel principal, @Valid @RequestBody PessoaUpdateDTO pessoaupdateDTO) {
+    public ResponseEntity<PessoaResponseDTO> atualizarMeusDados(@AuthenticationPrincipal PessoaModel principal,
+     @Valid @RequestBody PessoaUpdateDTO pessoaupdateDTO) {
         try {
             PessoaResponseDTO response = pessoaService.atualizarpessoa(principal.getIdPessoa(), pessoaupdateDTO);
             return ResponseEntity.ok(response);
@@ -177,6 +187,8 @@ public class PessoaController {
         @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
         @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
     })
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{idPessoa}")
     public ResponseEntity<Void> deletarpessoa(

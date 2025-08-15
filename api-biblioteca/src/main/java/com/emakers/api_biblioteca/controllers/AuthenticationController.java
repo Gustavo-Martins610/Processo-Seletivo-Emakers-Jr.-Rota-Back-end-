@@ -56,6 +56,7 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
         @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
+    
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO) {
         try {
@@ -79,6 +80,8 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "409", description = "E-mail já cadastrado"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
+
+    
     @PostMapping("/register")
     public ResponseEntity<PessoaResponseDTO> register(@RequestBody @Valid PessoaRequestDTO pessoaRequestDTO) {
         if (this.pessoaRepository.findByEmail(pessoaRequestDTO.email()) != null) {

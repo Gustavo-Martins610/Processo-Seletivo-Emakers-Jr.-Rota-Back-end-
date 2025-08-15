@@ -16,6 +16,7 @@ import com.emakers.api_biblioteca.models.PessoaModel;
 import com.emakers.api_biblioteca.repositories.PessoaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -146,4 +147,5 @@ public class PessoaService {
             .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada"));
         return new PessoaResponseDTO(pessoa);
     }
+
 }
